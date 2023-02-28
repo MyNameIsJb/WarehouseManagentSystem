@@ -7,6 +7,7 @@ export interface itemsInterface {
   itemDescription: string;
   classification: string;
   price: string;
+  image: string | undefined;
 }
 
 export interface paginationInterface {

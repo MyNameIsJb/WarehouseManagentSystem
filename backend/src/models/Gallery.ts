@@ -15,7 +15,7 @@ const GallerySchema = new Schema<GalleryInterface>({
   classification: { type: String, required: true },
   price: { type: String, required: true },
   image: { type: String, required: true },
-  createdAt: { type: Date, required: true },
+  createdAt: { type: Date, default: new Date() },
 });
 
 export default model<GalleryInterface>("Gallery", GallerySchema);

@@ -13,7 +13,7 @@ const authProductAPI = axios.create({
   baseURL: "http://localhost:8080/product",
 });
 const authGalleryAPI = axios.create({
-  baseURL: "http://localhost:8080/product",
+  baseURL: "http://localhost:8080/gallery",
 });
 
 authUserAPI.interceptors.request.use((req) => {
@@ -58,6 +58,7 @@ export const updateUserAPI = (data: object | any) =>
   authUserAPI.post(`/updateUser/${data.id}`, data);
 export const deleteUserAPI = (id: string | undefined) =>
   authUserAPI.delete(`/deleteUser/${id}`);
+// Product route
 export const getAllProductsAPI = (page: number | any) =>
   authProductAPI.get("/getAllProducts", { params: { page: page } });
 export const createProductAPI = (data: object) =>
@@ -68,6 +69,7 @@ export const updateProductAPI = (data: Object | any) =>
   authProductAPI.put(`/updateProduct/${data.id}`, data);
 export const deleteProductAPI = (id: string | undefined) =>
   authProductAPI.delete(`/deleteProduct/${id}`);
+// Gallery route
 export const getAllImagesAPI = (page: number | any) =>
   authGalleryAPI.get("/getAllImages", { params: { page: page } });
 export const uploadImageAPI = (data: object | any) =>

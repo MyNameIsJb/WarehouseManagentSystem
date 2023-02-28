@@ -26,18 +26,28 @@ export const getAllImagesController = async (req: Request, res: Response) => {
 };
 
 export const uploadImageController = async (req: Request, res: Response) => {
-  const { brandName, itemDescription, classification, price } = req.body;
+  const { brandName, itemDescription, classification, price, image } = req.body;
 
   try {
+    const type = image.substring(
+      "data:image/".length,
+      image.indexOf(";base64")
+    );
+    const imageType = ["jpeg", "jpg", "png", "gif"];
+
+    if (imageType.indexOf(type) === -1)
+      return res.status(400).json({ message: "Invalid file type" });
+
     await Gallery.create({
       brandName,
       itemDescription,
       classification,
       price,
+      image,
     });
-
     return res.status(200).json({ message: "Successfully uploaded an image" });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ message: "Something went wrong" });
   }
 };
