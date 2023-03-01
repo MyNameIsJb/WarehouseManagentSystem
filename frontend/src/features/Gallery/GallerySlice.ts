@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import * as api from "../../api";
 
 export interface itemsInterface {
+  _id?: string;
   brandName: string;
   itemDescription: string;
   classification: string;

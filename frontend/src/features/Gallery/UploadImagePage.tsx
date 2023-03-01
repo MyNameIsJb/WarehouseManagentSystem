@@ -50,6 +50,7 @@ const UploadImagePage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [baseImage, setBaseImage] = useState("");
+  const [image, setImage] = useState<boolean>(false);
 
   const {
     register,
@@ -82,21 +83,25 @@ const UploadImagePage = () => {
   };
 
   const onSubmit = (data: itemsInterface) => {
-    const finalData = {
-      ...data,
-      image: baseImage,
-    };
-    dispatch(uploadImageAction(finalData))
-      .unwrap()
-      .then(() => {
-        dispatch(getAllImagesAction(1));
-        navigate("/gallery");
-        reset();
+    if (baseImage === "") {
+      setImage(true);
+    } else {
+      const finalData = {
+        ...data,
+        image: baseImage,
+      };
+      dispatch(uploadImageAction(finalData))
+        .unwrap()
+        .then(() => {
+          dispatch(getAllImagesAction(1));
+          navigate("/gallery");
+          reset();
+        });
+      reset({
+        ...data,
+        image: "",
       });
-    reset({
-      ...data,
-      image: "",
-    });
+    }
   };
   return (
     <StyledParentBox>
@@ -209,7 +214,7 @@ const UploadImagePage = () => {
             Image
           </InputLabel>
           <Input
-            error={errors.image ? true : false}
+            error={image && true}
             id="standard-adornment-password"
             type="file"
             inputProps={{
@@ -223,7 +228,7 @@ const UploadImagePage = () => {
             id="outlined-weight-helper-text"
             sx={{ color: "#d50000" }}
           >
-            {errors.image?.message}
+            {image && "Please input image"}
           </FormHelperText>
           <Box sx={{ marginTop: "2em" }}>
             <Button

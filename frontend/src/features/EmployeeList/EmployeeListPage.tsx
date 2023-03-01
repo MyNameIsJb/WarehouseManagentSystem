@@ -13,7 +13,11 @@ import AddIcon from "@mui/icons-material/Add";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import { useAppDispatch, useAppSelector } from "../../store/store";
-import { deleteUserAction, getAllUsersAction } from "./employeeListSlice";
+import {
+  deleteUserAction,
+  filteredItemsInterface,
+  getAllUsersAction,
+} from "./employeeListSlice";
 
 const EmployeeListPage = () => {
   const dispatch = useAppDispatch();
@@ -94,47 +98,49 @@ const EmployeeListPage = () => {
                   <Td>0 Result</Td>
                 </Tr>
               ) : (
-                users?.filteredItems.map((item: any, index: number) => {
-                  return (
-                    <Tr key={index}>
-                      <Td>{item.name}</Td>
-                      <Td>{item.email}</Td>
-                      <Td>{item.address}</Td>
-                      <Td>{item.contactNumber}</Td>
-                      <Td>{item.levelOfAccess}</Td>
-                      <Td>{item.store ? item.store : "N/A"}</Td>
-                      <Td>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
-                        >
-                          <Link to={`/editUser/${item._id}`}>
-                            <Box sx={{ marginRight: "0.5em" }}>
-                              <Button color="success" variant="contained">
-                                <EditIcon />
+                users?.filteredItems.map(
+                  (item: filteredItemsInterface, index: number) => {
+                    return (
+                      <Tr key={index}>
+                        <Td>{item.name}</Td>
+                        <Td>{item.email}</Td>
+                        <Td>{item.address}</Td>
+                        <Td>{item.contactNumber}</Td>
+                        <Td>{item.levelOfAccess}</Td>
+                        <Td>{item.store ? item.store : "N/A"}</Td>
+                        <Td>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Link to={`/editUser/${item._id}`}>
+                              <Box sx={{ marginRight: "0.5em" }}>
+                                <Button color="success" variant="contained">
+                                  <EditIcon />
+                                </Button>
+                              </Box>
+                            </Link>
+                            <Box sx={{ marginLeft: "0.5em" }}>
+                              <Button
+                                onClick={() => {
+                                  dispatch(deleteUserAction(item._id));
+                                  setPage(1);
+                                }}
+                                color="error"
+                                variant="contained"
+                              >
+                                <DeleteIcon />
                               </Button>
                             </Box>
-                          </Link>
-                          <Box sx={{ marginLeft: "0.5em" }}>
-                            <Button
-                              onClick={() => {
-                                dispatch(deleteUserAction(item._id));
-                                setPage(1);
-                              }}
-                              color="error"
-                              variant="contained"
-                            >
-                              <DeleteIcon />
-                            </Button>
                           </Box>
-                        </Box>
-                      </Td>
-                    </Tr>
-                  );
-                })
+                        </Td>
+                      </Tr>
+                    );
+                  }
+                )
               )}
             </Tbody>
           </Table>

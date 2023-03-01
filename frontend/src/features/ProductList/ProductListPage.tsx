@@ -13,7 +13,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import { useAppDispatch, useAppSelector } from "../../store/store";
-import { deleteProductAction, getAllProductsAction } from "./productListSlice";
+import {
+  deleteProductAction,
+  getAllProductsAction,
+  itemsInterface,
+} from "./productListSlice";
 
 const ProductListPage = () => {
   const dispatch = useAppDispatch();
@@ -87,7 +91,7 @@ const ProductListPage = () => {
                   <Td>0 Result</Td>
                 </Tr>
               ) : (
-                products?.items.map((item: any, index: number) => {
+                products?.items.map((item: itemsInterface, index: number) => {
                   return (
                     <Tr key={index}>
                       <Td
