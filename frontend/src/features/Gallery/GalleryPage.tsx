@@ -14,8 +14,12 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useNavigate } from "react-router-dom";
-import { getAllImagesAction, itemsInterface } from "./GallerySlice";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  deleteImageAction,
+  getAllImagesAction,
+  itemsInterface,
+} from "./GallerySlice";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 
 const GalleryPage = () => {
@@ -121,10 +125,20 @@ const GalleryPage = () => {
                     justifyContent: "space-between",
                   }}
                 >
-                  <Button size="small" variant="contained">
-                    <EditIcon />
-                  </Button>
-                  <Button size="small" variant="contained" color="error">
+                  <Link to={`/editImage/${item._id}`}>
+                    <Button size="small" variant="contained">
+                      <EditIcon />
+                    </Button>
+                  </Link>
+                  <Button
+                    onClick={() => {
+                      dispatch(deleteImageAction(item._id));
+                      setPage(1);
+                    }}
+                    size="small"
+                    variant="contained"
+                    color="error"
+                  >
                     <DeleteIcon />
                   </Button>
                 </CardActions>

@@ -47,6 +47,7 @@ export const createPasswordAPI = (data: object) =>
   userAPI.post("/createPassword", data);
 
 //Route that require token
+// Employee List Route
 export const getProfileAPI = () => authUserAPI.get("/getProfile");
 export const getAllUsersAPI = (page: number | any) =>
   authUserAPI.get("/getAllUsers", { params: { page: page } });
@@ -58,7 +59,8 @@ export const updateUserAPI = (data: object | any) =>
   authUserAPI.post(`/updateUser/${data.id}`, data);
 export const deleteUserAPI = (id: string | undefined) =>
   authUserAPI.delete(`/deleteUser/${id}`);
-// Product route
+
+// Product List Route
 export const getAllProductsAPI = (page: number | any) =>
   authProductAPI.get("/getAllProducts", { params: { page: page } });
 export const createProductAPI = (data: object) =>
@@ -69,8 +71,15 @@ export const updateProductAPI = (data: Object | any) =>
   authProductAPI.put(`/updateProduct/${data.id}`, data);
 export const deleteProductAPI = (id: string | undefined) =>
   authProductAPI.delete(`/deleteProduct/${id}`);
-// Gallery route
+
+// Gallery Route
 export const getAllImagesAPI = (page: number | any) =>
   authGalleryAPI.get("/getAllImages", { params: { page: page } });
 export const uploadImageAPI = (data: object | any) =>
   authGalleryAPI.post("/uploadImage", data);
+export const getImageAPI = (id: string | undefined) =>
+  authGalleryAPI.get(`/getImage/${id}`);
+export const updateImageAPI = (data: object | any) =>
+  authGalleryAPI.put(`/updateImage/${data.id}`, data);
+export const deleteImageAPI = (id: string | undefined) =>
+  authGalleryAPI.delete(`/deleteImage/${id}`);
