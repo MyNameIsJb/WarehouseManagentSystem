@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
+import mongoose from "mongoose";
 import Gallery from "../models/Gallery";
 
 export const getAllImagesController = async (req: Request, res: Response) => {
   try {
-    const ITEMS_PER_PAGE = 10;
+    const ITEMS_PER_PAGE = 8;
     const page: any = req.query.page || 1;
     const query = {};
     const skip = (page - 1) * ITEMS_PER_PAGE;
@@ -33,10 +34,13 @@ export const uploadImageController = async (req: Request, res: Response) => {
       "data:image/".length,
       image.indexOf(";base64")
     );
-    const imageType = ["jpeg", "jpg", "png", "gif"];
-
+    const imageType = ["jpeg", "jpg", "png", "gif", "webp"];
     if (imageType.indexOf(type) === -1)
       return res.status(400).json({ message: "Invalid file type" });
+
+    const buffer = Buffer.from(image.substring(image.indexOf(",") + 1));
+    if (buffer.length >= 52428800)
+      return res.status(400).json({ message: "Image too large" });
 
     await Gallery.create({
       brandName,
@@ -47,7 +51,21 @@ export const uploadImageController = async (req: Request, res: Response) => {
     });
     return res.status(200).json({ message: "Successfully uploaded an image" });
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+export const getImageById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id))
+      return res.status(404).json({ message: "Invalid ID" });
+
+    const singleImage = await Gallery.findById({ _id: id });
+
+    return res.status(200).json(singleImage);
+  } catch (error) {
     return res.status(500).json({ message: "Something went wrong" });
   }
 };

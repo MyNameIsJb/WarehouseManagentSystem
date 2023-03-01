@@ -63,7 +63,9 @@ export const getProductById = async (req: Request, res: Response) => {
     const singleProduct = await Product.findById({ _id: id });
 
     return res.status(200).json(singleProduct);
-  } catch (error) {}
+  } catch (error) {
+    return res.status(500).json({ message: "Something went wrong" });
+  }
 };
 
 export const updateProductController = async (req: Request, res: Response) => {
