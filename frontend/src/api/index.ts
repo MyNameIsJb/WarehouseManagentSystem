@@ -18,6 +18,9 @@ const authGalleryAPI = axios.create({
 const authSaleAPI = axios.create({
   baseURL: "http://localhost:8080/sale",
 });
+const authPurchaseAPI = axios.create({
+  baseURL: "http://localhost:8080/purchase",
+});
 
 authUserAPI.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
@@ -41,6 +44,13 @@ authGalleryAPI.interceptors.request.use((req) => {
 });
 
 authSaleAPI.interceptors.request.use((req) => {
+  if (localStorage.getItem("token")) {
+    req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
+  }
+  return req;
+});
+
+authPurchaseAPI.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
     req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
   }
@@ -97,3 +107,7 @@ export const deleteImageAPI = (id: string | undefined) =>
 // Sale Router
 export const getAllSalesAPI = (page: number | any) =>
   authSaleAPI.get("/getAllSales", { params: { page: page } });
+
+// Purchase Router
+export const getAllPurchasesAPI = (page: number | any) =>
+  authPurchaseAPI.get("/getAllPurchases", { params: { page: page } });
