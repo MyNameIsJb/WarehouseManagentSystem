@@ -15,6 +15,7 @@ import EditProductPage from "./features/ProductList/EditProductPage";
 import GalleryPage from "./features/Gallery/GalleryPage";
 import UploadImagePage from "./features/Gallery/UploadImagePage";
 import EditImagePage from "./features/Gallery/EditImagePage";
+import InventoryPage from "./features/ProductList/InventoryPage";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
           <Route path="/gallery" element={<GalleryPage />} />
           <Route path="/uploadImage" element={<UploadImagePage />} />
           <Route path="/editImage/:id" element={<EditImagePage />} />
+          <Route path="/inventory" element={<InventoryPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
