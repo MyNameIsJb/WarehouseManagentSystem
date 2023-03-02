@@ -13,10 +13,12 @@ app.use(cors());
 import userRoute from "./routes/userRoute";
 import productRouter from "./routes/productRoute";
 import galleryRouter from "./routes/galleryRoute";
+import saleRouter from "./routes/saleRoute";
 
 // Declare routes path
 app.use("/user", userRoute);
 app.use("/product", productRouter);
 app.use("/gallery", galleryRouter);
+app.use("/sale", saleRouter);
 
 export { app };

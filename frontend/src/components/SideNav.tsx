@@ -34,7 +34,7 @@ export const adminMenu = [
   { route: "productList", link: "Product List" },
   { route: "gallery", link: "Gallery" },
   { route: "inventory", link: "Inventory" },
-  { route: "sales", link: "Sales" },
+  { route: "sale", link: "Sale" },
   { route: "purchase", link: "Purchase" },
   { route: "incomingProduct", link: "Incoming Product" },
   { route: "outgoingProduct", link: "Outgoing Product" },
@@ -107,7 +107,7 @@ const SideNav = () => {
                         <CollectionsIcon />
                       ) : text.link === "Inventory" ? (
                         <InventoryIcon />
-                      ) : text.link === "Sales" ? (
+                      ) : text.link === "Sale" ? (
                         <SellIcon />
                       ) : text.link === "Purchase" ? (
                         <ShoppingCartIcon />
