@@ -18,6 +18,9 @@ import EditImagePage from "./features/Gallery/EditImagePage";
 import InventoryPage from "./features/ProductList/InventoryPage";
 import SalePage from "./features/Sale/SalePage";
 import PurchasePage from "./features/Purchase/PurchasePage";
+import IncomingProductPage from "./features/IncomingProduct/IncomingProductPage";
+import CreateIncomingProductPage from "./features/IncomingProduct/CreateIncomingProductPage";
+import EditIncomingProductPage from "./features/IncomingProduct/EditIncomingProductPage";
 
 function App() {
   return (
@@ -47,6 +50,15 @@ function App() {
           <Route path="/inventory" element={<InventoryPage />} />
           <Route path="/sale" element={<SalePage />} />
           <Route path="/purchase" element={<PurchasePage />} />
+          <Route path="/incomingProduct" element={<IncomingProductPage />} />
+          <Route
+            path="/createIncomingProduct"
+            element={<CreateIncomingProductPage />}
+          />
+          <Route
+            path="/editIncomingProduct/:id"
+            element={<EditIncomingProductPage />}
+          />
         </Route>
       </Routes>
     </BrowserRouter>

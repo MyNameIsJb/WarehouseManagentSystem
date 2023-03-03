@@ -154,189 +154,173 @@ const EditUserPage = () => {
       ) : (
         <>
           <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-            <Box>
-              <FormControl
-                sx={{ width: "100%", margin: "1em 0 1em 0" }}
-                variant="standard"
+            <FormControl
+              sx={{ width: "100%", margin: "1em 0 1em 0" }}
+              variant="standard"
+            >
+              <InputLabel htmlFor="standard-adornment-password" shrink>
+                Name
+              </InputLabel>
+              <Input
+                {...register("name")}
+                error={errors.name ? true : false}
+                id="standard-adornment-password"
+                type="text"
+                endAdornment={
+                  <AccountCircle
+                    sx={{ color: "action.active", mr: 1, my: 0.5 }}
+                  />
+                }
+              />
+              <FormHelperText
+                id="outlined-weight-helper-text"
+                sx={{ color: "#d50000" }}
               >
-                <InputLabel htmlFor="standard-adornment-password" shrink>
-                  Name
-                </InputLabel>
-                <Input
-                  {...register("name")}
-                  error={errors.name ? true : false}
-                  id="standard-adornment-password"
-                  type="text"
-                  endAdornment={
-                    <AccountCircle
-                      sx={{ color: "action.active", mr: 1, my: 0.5 }}
-                    />
-                  }
-                />
-                <FormHelperText
-                  id="outlined-weight-helper-text"
-                  sx={{ color: "#d50000" }}
-                >
-                  {errors.name?.message}
-                </FormHelperText>
-              </FormControl>
-              <FormControl
-                sx={{ width: "100%", margin: "1em 0 1em 0" }}
-                variant="standard"
+                {errors.name?.message}
+              </FormHelperText>
+            </FormControl>
+            <FormControl
+              sx={{ width: "100%", margin: "1em 0 1em 0" }}
+              variant="standard"
+            >
+              <InputLabel htmlFor="standard-adornment-password" shrink>
+                Email
+              </InputLabel>
+              <Input
+                {...register("email")}
+                error={errors.email ? true : false}
+                id="standard-adornment-password"
+                type="text"
+                endAdornment={
+                  <EmailIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
+                }
+              />
+              <FormHelperText
+                id="outlined-weight-helper-text"
+                sx={{ color: "#d50000" }}
               >
-                <InputLabel htmlFor="standard-adornment-password" shrink>
-                  Email
-                </InputLabel>
-                <Input
-                  {...register("email")}
-                  error={errors.email ? true : false}
-                  id="standard-adornment-password"
-                  type="text"
-                  endAdornment={
-                    <EmailIcon
-                      sx={{ color: "action.active", mr: 1, my: 0.5 }}
-                    />
-                  }
-                />
-                <FormHelperText
-                  id="outlined-weight-helper-text"
-                  sx={{ color: "#d50000" }}
-                >
-                  {errors.email?.message}
-                </FormHelperText>
-              </FormControl>
-            </Box>
-
-            <Box>
-              <FormControl
-                sx={{ width: "100%", margin: "1em 0 1em 0" }}
-                variant="standard"
+                {errors.email?.message}
+              </FormHelperText>
+            </FormControl>
+            <FormControl
+              sx={{ width: "100%", margin: "1em 0 1em 0" }}
+              variant="standard"
+            >
+              <InputLabel htmlFor="standard-adornment-password" shrink>
+                Address
+              </InputLabel>
+              <Input
+                {...register("address")}
+                error={errors.address ? true : false}
+                id="standard-adornment-password"
+                type="text"
+                endAdornment={
+                  <HomeIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
+                }
+              />
+              <FormHelperText
+                id="outlined-weight-helper-text"
+                sx={{ color: "#d50000" }}
               >
-                <InputLabel htmlFor="standard-adornment-password" shrink>
-                  Address
-                </InputLabel>
-                <Input
-                  {...register("address")}
-                  error={errors.address ? true : false}
-                  id="standard-adornment-password"
-                  type="text"
-                  endAdornment={
-                    <HomeIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
-                  }
-                />
-                <FormHelperText
-                  id="outlined-weight-helper-text"
-                  sx={{ color: "#d50000" }}
-                >
-                  {errors.address?.message}
-                </FormHelperText>
-              </FormControl>
-              <FormControl
-                sx={{ width: "100%", margin: "1em 0 1em 0" }}
-                variant="standard"
+                {errors.address?.message}
+              </FormHelperText>
+            </FormControl>
+            <FormControl
+              sx={{ width: "100%", margin: "1em 0 1em 0" }}
+              variant="standard"
+            >
+              <InputLabel htmlFor="standard-adornment-password" shrink>
+                Birthdate
+              </InputLabel>
+              <Input
+                {...register("birthDate")}
+                error={errors.birthDate ? true : false}
+                id="standard-adornment-password"
+                type="date"
+              />
+              <FormHelperText
+                id="outlined-weight-helper-text"
+                sx={{ color: "#d50000" }}
               >
-                <InputLabel htmlFor="standard-adornment-password" shrink>
-                  Birthdate
-                </InputLabel>
-                <Input
-                  {...register("birthDate")}
-                  error={errors.birthDate ? true : false}
-                  id="standard-adornment-password"
-                  type="date"
-                />
-                <FormHelperText
-                  id="outlined-weight-helper-text"
-                  sx={{ color: "#d50000" }}
-                >
-                  {errors.birthDate?.message}
-                </FormHelperText>
-              </FormControl>
-            </Box>
-
-            <Box>
-              <FormControl
-                sx={{ width: "100%", margin: "1em 0 1em 0" }}
-                variant="standard"
+                {errors.birthDate?.message}
+              </FormHelperText>
+            </FormControl>
+            <FormControl
+              sx={{ width: "100%", margin: "1em 0 1em 0" }}
+              variant="standard"
+            >
+              <InputLabel htmlFor="standard-adornment-password" shrink>
+                Contact Number
+              </InputLabel>
+              <Input
+                {...register("contactNumber")}
+                error={errors.contactNumber ? true : false}
+                id="standard-adornment-password"
+                type="text"
+                endAdornment={
+                  <LocalPhoneIcon
+                    sx={{ color: "action.active", mr: 1, my: 0.5 }}
+                  />
+                }
+              />
+              <FormHelperText
+                id="outlined-weight-helper-text"
+                sx={{ color: "#d50000" }}
               >
-                <InputLabel htmlFor="standard-adornment-password" shrink>
-                  Contact Number
-                </InputLabel>
-                <Input
-                  {...register("contactNumber")}
-                  error={errors.contactNumber ? true : false}
-                  id="standard-adornment-password"
-                  type="text"
-                  endAdornment={
-                    <LocalPhoneIcon
-                      sx={{ color: "action.active", mr: 1, my: 0.5 }}
-                    />
-                  }
-                />
-                <FormHelperText
-                  id="outlined-weight-helper-text"
-                  sx={{ color: "#d50000" }}
-                >
-                  {errors.contactNumber?.message}
-                </FormHelperText>
-              </FormControl>
-              <FormControl
-                sx={{ width: "100%", margin: "1em 0 1em 0" }}
-                variant="standard"
+                {errors.contactNumber?.message}
+              </FormHelperText>
+            </FormControl>
+            <FormControl
+              sx={{ width: "100%", margin: "1em 0 1em 0" }}
+              variant="standard"
+            >
+              <InputLabel id="demo-simple-select-label" shrink>
+                Level Of Access
+              </InputLabel>
+              <Select
+                {...register("levelOfAccess")}
+                error={errors.levelOfAccess ? true : false}
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={levelOfAccess}
+                label="Level Of Access"
+                onChange={handleChange}
               >
-                <InputLabel id="demo-simple-select-label" shrink>
-                  Level Of Access
-                </InputLabel>
-                <Select
-                  {...register("levelOfAccess")}
-                  error={errors.levelOfAccess ? true : false}
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={levelOfAccess}
-                  label="Level Of Access"
-                  onChange={handleChange}
-                >
-                  <MenuItem value={"Employee"}>Employee</MenuItem>
-                  <MenuItem value={"Client"}>Client</MenuItem>
-                </Select>
-                <FormHelperText
-                  id="outlined-weight-helper-text"
-                  sx={{ color: "#d50000" }}
-                >
-                  {errors.levelOfAccess?.message}
-                </FormHelperText>
-              </FormControl>
-            </Box>
-
-            <Box>
-              <FormControl
-                sx={{ width: "100%", margin: "1em 0 1em 0" }}
-                variant="standard"
+                <MenuItem value={"Employee"}>Employee</MenuItem>
+                <MenuItem value={"Client"}>Client</MenuItem>
+              </Select>
+              <FormHelperText
+                id="outlined-weight-helper-text"
+                sx={{ color: "#d50000" }}
               >
-                <InputLabel htmlFor="standard-adornment-password" shrink>
-                  Store (Optional)
-                </InputLabel>
-                <Input
-                  {...register("store")}
-                  error={errors.store ? true : false}
-                  id="standard-adornment-password"
-                  type="text"
-                  endAdornment={
-                    <StoreIcon
-                      sx={{ color: "action.active", mr: 1, my: 0.5 }}
-                    />
-                  }
-                />
-                <FormHelperText
-                  id="outlined-weight-helper-text"
-                  sx={{ color: errors.store?.message ? "#d50000" : "inherit" }}
-                >
-                  {errors.store?.message
-                    ? errors.store?.message
-                    : "*Type N/A if not applicable"}
-                </FormHelperText>
-              </FormControl>
-            </Box>
-
+                {errors.levelOfAccess?.message}
+              </FormHelperText>
+            </FormControl>
+            <FormControl
+              sx={{ width: "100%", margin: "1em 0 1em 0" }}
+              variant="standard"
+            >
+              <InputLabel htmlFor="standard-adornment-password" shrink>
+                Store (Optional)
+              </InputLabel>
+              <Input
+                {...register("store")}
+                error={errors.store ? true : false}
+                id="standard-adornment-password"
+                type="text"
+                endAdornment={
+                  <StoreIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
+                }
+              />
+              <FormHelperText
+                id="outlined-weight-helper-text"
+                sx={{ color: errors.store?.message ? "#d50000" : "inherit" }}
+              >
+                {errors.store?.message
+                  ? errors.store?.message
+                  : "*Type N/A if not applicable"}
+              </FormHelperText>
+            </FormControl>
             <Box sx={{ marginTop: "2em" }}>
               <Button
                 type="submit"

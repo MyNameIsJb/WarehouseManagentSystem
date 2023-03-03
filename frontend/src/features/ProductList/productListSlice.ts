@@ -162,8 +162,8 @@ export const productListSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(getAllProductsAction.rejected, (state, action) => {
-      state.loading = false;
       state.errors = action.payload;
+      state.loading = false;
     });
     builder.addCase(createProductAction.pending, (state) => {
       state.loading = true;
@@ -172,19 +172,19 @@ export const productListSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(createProductAction.rejected, (state, action) => {
-      state.loading = false;
       state.errors = action.payload;
+      state.loading = false;
     });
     builder.addCase(getProductAction.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(getProductAction.fulfilled, (state, action) => {
-      state.loading = false;
       state.singleProduct = action.payload;
+      state.loading = false;
     });
     builder.addCase(getProductAction.rejected, (state, action) => {
-      state.loading = false;
       state.errors = action.payload;
+      state.loading = false;
     });
     builder.addCase(updateProductAction.pending, (state) => {
       state.loading = true;
@@ -193,8 +193,8 @@ export const productListSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(updateProductAction.rejected, (state, action) => {
-      state.loading = false;
       state.errors = action.payload;
+      state.loading = false;
     });
     builder.addCase(deleteProductAction.pending, (state) => {
       state.loading = true;
@@ -203,8 +203,8 @@ export const productListSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(deleteProductAction.rejected, (state, action) => {
-      state.loading = false;
       state.errors = action.payload;
+      state.loading = false;
     });
     builder.addCase("LOGOUT", (state) => {
       Object.assign(state, initialState);

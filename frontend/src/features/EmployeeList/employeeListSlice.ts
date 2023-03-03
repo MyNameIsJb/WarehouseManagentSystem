@@ -164,8 +164,8 @@ export const employeeListSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(getAllUsersAction.rejected, (state, action) => {
-      state.loading = false;
       state.errors = action.payload;
+      state.loading = false;
     });
     builder.addCase(createUserAction.pending, (state) => {
       state.loading = true;
@@ -174,8 +174,8 @@ export const employeeListSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(createUserAction.rejected, (state, action) => {
-      state.loading = false;
       state.errors = action.payload;
+      state.loading = false;
     });
     builder.addCase(getUserAction.pending, (state) => {
       state.loading = true;
@@ -185,8 +185,8 @@ export const employeeListSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(getUserAction.rejected, (state, action) => {
-      state.loading = false;
       state.errors = action.payload;
+      state.loading = false;
     });
     builder.addCase(updateUserAction.pending, (state) => {
       state.loading = true;
@@ -195,8 +195,8 @@ export const employeeListSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(updateUserAction.rejected, (state, action) => {
-      state.loading = false;
       state.errors = action.payload;
+      state.loading = false;
     });
     builder.addCase(deleteUserAction.pending, (state) => {
       state.loading = true;
@@ -205,8 +205,8 @@ export const employeeListSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(deleteUserAction.rejected, (state, action) => {
-      state.loading = false;
       state.errors = action.payload;
+      state.loading = false;
     });
     builder.addCase("LOGOUT", (state) => {
       Object.assign(state, initialState);

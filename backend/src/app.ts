@@ -15,6 +15,7 @@ import productRouter from "./routes/productRoute";
 import galleryRouter from "./routes/galleryRoute";
 import saleRouter from "./routes/saleRoute";
 import purchaseRouter from "./routes/purchaseRoute";
+import incomingProductRouter from "./routes/incomingProductRoute";
 
 // Declare routes path
 app.use("/user", userRoute);
@@ -22,5 +23,6 @@ app.use("/product", productRouter);
 app.use("/gallery", galleryRouter);
 app.use("/sale", saleRouter);
 app.use("/purchase", purchaseRouter);
+app.use("/incomingProduct", incomingProductRouter);
 
 export { app };

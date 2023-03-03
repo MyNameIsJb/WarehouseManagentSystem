@@ -161,8 +161,8 @@ export const gallerySlice = createSlice({
       state.loading = false;
     });
     builder.addCase(getAllImagesAction.rejected, (state, action) => {
-      state.loading = false;
       state.errors = action.payload;
+      state.loading = false;
     });
     builder.addCase(uploadImageAction.pending, (state) => {
       state.loading = true;
@@ -171,19 +171,19 @@ export const gallerySlice = createSlice({
       state.loading = false;
     });
     builder.addCase(uploadImageAction.rejected, (state, action) => {
-      state.loading = false;
       state.errors = action.payload;
+      state.loading = false;
     });
     builder.addCase(getImageAction.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(getImageAction.fulfilled, (state, action) => {
-      state.loading = false;
       state.singleImage = action.payload;
+      state.loading = false;
     });
     builder.addCase(getImageAction.rejected, (state, action) => {
-      state.loading = false;
       state.errors = action.payload;
+      state.loading = false;
     });
     builder.addCase(updateImageAction.pending, (state) => {
       state.loading = true;
@@ -192,8 +192,8 @@ export const gallerySlice = createSlice({
       state.loading = false;
     });
     builder.addCase(updateImageAction.rejected, (state, action) => {
-      state.loading = false;
       state.errors = action.payload;
+      state.loading = false;
     });
     builder.addCase(deleteImageAction.pending, (state) => {
       state.loading = true;
@@ -202,8 +202,8 @@ export const gallerySlice = createSlice({
       state.loading = false;
     });
     builder.addCase(deleteImageAction.rejected, (state, action) => {
-      state.loading = false;
       state.errors = action.payload;
+      state.loading = false;
     });
     builder.addCase("LOGOUT", (state) => {
       Object.assign(state, initialState);
