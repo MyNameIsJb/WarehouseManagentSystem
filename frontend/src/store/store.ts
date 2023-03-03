@@ -20,6 +20,7 @@ import productListReducer from "../features/ProductList/productListSlice";
 import galleryReducer from "../features/Gallery/GallerySlice";
 import saleReducer from "../features/Sale/saleSlice";
 import purchaseReducer from "../features/Purchase/purchaseSlice";
+import incomingProductReducer from "../features/IncomingProduct/incomingProductSlice";
 
 const persistConfig = {
   key: "root",
@@ -37,6 +38,7 @@ const reducer = combineReducers({
   gallery: galleryReducer,
   sale: saleReducer,
   purchase: purchaseReducer,
+  incomingProduct: incomingProductReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

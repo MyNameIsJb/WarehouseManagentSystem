@@ -54,8 +54,8 @@ export const createPasswordSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(createPasswordAction.rejected, (state, action) => {
-      state.loading = false;
       state.errors = action.payload;
+      state.loading = false;
     });
     builder.addCase("LOGOUT", (state) => {
       Object.assign(state, initialState);

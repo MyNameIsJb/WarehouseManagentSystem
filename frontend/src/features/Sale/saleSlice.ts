@@ -69,8 +69,8 @@ export const saleSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(getAllSalesAction.rejected, (state, action) => {
-      state.loading = false;
       state.errors = action.payload;
+      state.loading = false;
     });
     builder.addCase("LOGOUT", (state) => {
       Object.assign(state, initialState);

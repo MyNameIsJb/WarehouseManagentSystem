@@ -16,10 +16,10 @@ import { styled } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
 import { useAppDispatch } from "../../store/store";
 import {
-  createProductAction,
-  getAllProductsAction,
+  createIncomingProductAction,
+  getAllIncomingProductsAction,
   itemsInterface,
-} from "./productListSlice";
+} from "./incomingProductSlice";
 
 const StyledParentBox = styled(Box)(({ theme }) => ({
   width: "50%",
@@ -39,16 +39,15 @@ const StyledParentBox = styled(Box)(({ theme }) => ({
 
 const schema = yup
   .object({
-    productId: yup.string().required("Product ID is required"),
     brandName: yup.string().required("Brand name is required"),
     description: yup.string().required("Description is required"),
     model: yup.string().required("Model is required"),
     quantity: yup.number().required("Quantity is required"),
-    pricePerUnit: yup.string().required("Price per unit is required"),
+    totalPrice: yup.string().required("Total price is required"),
   })
   .required();
 
-const CreateProductPage = () => {
+const CreateIncomingProductPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const {
@@ -61,11 +60,11 @@ const CreateProductPage = () => {
   });
 
   const onSubmit = (data: itemsInterface) => {
-    dispatch(createProductAction(data))
+    dispatch(createIncomingProductAction(data))
       .unwrap()
       .then(() => {
-        dispatch(getAllProductsAction(1));
-        navigate("/productList");
+        dispatch(getAllIncomingProductsAction(1));
+        navigate("/incomingProduct");
       });
     reset();
   };
@@ -84,37 +83,17 @@ const CreateProductPage = () => {
           component="h1"
           sx={{ fontWeight: "bold", color: "inherit" }}
         >
-          Create Product
+          Add Product
         </Typography>
         <Button
           color="error"
-          onClick={() => navigate("/productList")}
+          onClick={() => navigate("/incomingProduct")}
           variant="contained"
         >
           <CloseIcon />
         </Button>
       </Box>
       <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-        <FormControl
-          sx={{ width: "100%", margin: "1em 0 1em 0" }}
-          variant="standard"
-        >
-          <InputLabel htmlFor="standard-adornment-password">
-            Product ID
-          </InputLabel>
-          <Input
-            {...register("productId")}
-            error={errors.productId ? true : false}
-            id="standard-adornment-password"
-            type="text"
-          />
-          <FormHelperText
-            id="outlined-weight-helper-text"
-            sx={{ color: "#d50000" }}
-          >
-            {errors.productId?.message}
-          </FormHelperText>
-        </FormControl>
         <FormControl
           sx={{ width: "100%", margin: "1em 0 1em 0" }}
           variant="standard"
@@ -198,11 +177,11 @@ const CreateProductPage = () => {
           variant="standard"
         >
           <InputLabel htmlFor="standard-adornment-password">
-            Price Per Unit
+            Total Price
           </InputLabel>
           <Input
-            {...register("pricePerUnit")}
-            error={errors.pricePerUnit ? true : false}
+            {...register("totalPrice")}
+            error={errors.totalPrice ? true : false}
             id="standard-adornment-password"
             type="text"
           />
@@ -210,7 +189,7 @@ const CreateProductPage = () => {
             id="outlined-weight-helper-text"
             sx={{ color: "#d50000" }}
           >
-            {errors.pricePerUnit?.message}
+            {errors.totalPrice?.message}
           </FormHelperText>
         </FormControl>
         <Box sx={{ marginTop: "2em" }}>
@@ -227,4 +206,4 @@ const CreateProductPage = () => {
   );
 };
 
-export default CreateProductPage;
+export default CreateIncomingProductPage;

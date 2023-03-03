@@ -21,6 +21,9 @@ const authSaleAPI = axios.create({
 const authPurchaseAPI = axios.create({
   baseURL: "http://localhost:8080/purchase",
 });
+const authIncomingProductAPI = axios.create({
+  baseURL: "http://localhost:8080/incomingProduct",
+});
 
 authUserAPI.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
@@ -57,6 +60,13 @@ authPurchaseAPI.interceptors.request.use((req) => {
   return req;
 });
 
+authIncomingProductAPI.interceptors.request.use((req) => {
+  if (localStorage.getItem("token")) {
+    req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
+  }
+  return req;
+});
+
 //Route that dont require token
 export const signInAPI = (data: object) => userAPI.post("/signIn", data);
 export const forgotPasswordAPI = (data: object) =>
@@ -67,7 +77,7 @@ export const createPasswordAPI = (data: object) =>
   userAPI.post("/createPassword", data);
 
 //Route that require token
-// Employee List Route
+// Employee List Router
 export const getProfileAPI = () => authUserAPI.get("/getProfile");
 export const getAllUsersAPI = (page: number | any) =>
   authUserAPI.get("/getAllUsers", { params: { page: page } });
@@ -80,7 +90,7 @@ export const updateUserAPI = (data: object | any) =>
 export const deleteUserAPI = (id: string | undefined) =>
   authUserAPI.delete(`/deleteUser/${id}`);
 
-// Product List Route
+// Product List Router
 export const getAllProductsAPI = (page: number | any) =>
   authProductAPI.get("/getAllProducts", { params: { page: page } });
 export const createProductAPI = (data: object) =>
@@ -92,7 +102,7 @@ export const updateProductAPI = (data: Object | any) =>
 export const deleteProductAPI = (id: string | undefined) =>
   authProductAPI.delete(`/deleteProduct/${id}`);
 
-// Gallery Route
+// Gallery Router
 export const getAllImagesAPI = (page: number | any) =>
   authGalleryAPI.get("/getAllImages", { params: { page: page } });
 export const uploadImageAPI = (data: object | any) =>
@@ -111,3 +121,17 @@ export const getAllSalesAPI = (page: number | any) =>
 // Purchase Router
 export const getAllPurchasesAPI = (page: number | any) =>
   authPurchaseAPI.get("/getAllPurchases", { params: { page: page } });
+
+// Incoming Product Router
+export const getAllIncomingProductsAPI = (page: number | any) =>
+  authIncomingProductAPI.get("/getAllIncomingProducts", {
+    params: { page: page },
+  });
+export const createIncomingProductAPI = (data: object | any) =>
+  authIncomingProductAPI.post("/createIncomingProduct", data);
+export const getIncomingProductAPI = (id: string | undefined) =>
+  authIncomingProductAPI.get(`/getIncomingProduct/${id}`);
+export const updateIncomingProductAPI = (data: object | any) =>
+  authIncomingProductAPI.put(`/updateIncomingProduct/${data.id}`, data);
+export const deleteIncomingProductAPI = (id: string | undefined) =>
+  authIncomingProductAPI.delete(`/deleteIncomingProduct/${id}`);
