@@ -17,12 +17,12 @@ import { styled } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import {
-  getAllProductsAction,
-  getProductAction,
+  getAllOutgoingProductsAction,
+  getOutgoingProductAction,
   itemsInterface,
-  removeSingleProductAction,
-  updateProductAction,
-} from "./productListSlice";
+  removeSingleOutgoingProductAction,
+  updateOutgoingProductAction,
+} from "./outgoingProductSlice";
 
 const StyledParentBox = styled(Box)(({ theme }) => ({
   width: "50%",
@@ -42,20 +42,18 @@ const StyledParentBox = styled(Box)(({ theme }) => ({
 
 const schema = yup
   .object({
-    brandName: yup.string().required("Brand name is required"),
-    description: yup.string().required("Description is required"),
-    model: yup.string().required("Model is required"),
+    productId: yup.string().required("Brand name is required"),
     quantity: yup.number().required("Quantity is required"),
-    pricePerUnit: yup.string().required("Price per unit is required"),
+    store: yup.string().required("Store is required"),
   })
   .required();
 
-const EditProductPage = () => {
+const EditOutgoingProductPage = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { singleProduct, loading } = useAppSelector(
-    (state) => state.productList
+  const { singleOutgoingProduct, loading } = useAppSelector(
+    (state) => state.outgoingProduct
   );
   const {
     register,
@@ -65,38 +63,35 @@ const EditProductPage = () => {
   } = useForm<itemsInterface>({
     resolver: yupResolver(schema),
     defaultValues: {
-      brandName: singleProduct?.brandName,
-      description: singleProduct?.description,
-      model: singleProduct?.model,
-      quantity: singleProduct?.quantity,
-      pricePerUnit: singleProduct?.pricePerUnit,
+      productId: singleOutgoingProduct?.productId,
+      quantity: singleOutgoingProduct?.quantity,
+      store: singleOutgoingProduct?.store,
     },
   });
 
   useEffect(() => {
-    dispatch(getProductAction(id));
+    dispatch(getOutgoingProductAction(id));
   }, [dispatch, id]);
 
   useEffect(() => {
     reset({
-      brandName: singleProduct?.brandName,
-      description: singleProduct?.description,
-      model: singleProduct?.model,
-      quantity: singleProduct?.quantity,
-      pricePerUnit: singleProduct?.pricePerUnit,
+      productId: singleOutgoingProduct?.productId,
+      quantity: singleOutgoingProduct?.quantity,
+      store: singleOutgoingProduct?.store,
     });
-  }, [reset, singleProduct]);
+  }, [reset, singleOutgoingProduct]);
 
   const onSubmit = (data: itemsInterface) => {
     const finalData = {
       ...data,
       id: id,
     };
-    dispatch(updateProductAction(finalData))
+
+    dispatch(updateOutgoingProductAction(finalData))
       .unwrap()
       .then(() => {
-        dispatch(getAllProductsAction(1));
-        navigate("/productList");
+        dispatch(getAllOutgoingProductsAction(1));
+        navigate("/outgoingProduct");
       });
     reset();
   };
@@ -120,8 +115,8 @@ const EditProductPage = () => {
         <Button
           color="error"
           onClick={() => {
-            navigate("/productList");
-            dispatch(removeSingleProductAction());
+            navigate("/outgoingProduct");
+            dispatch(removeSingleOutgoingProductAction());
           }}
           variant="contained"
         >
@@ -141,11 +136,11 @@ const EditProductPage = () => {
             variant="standard"
           >
             <InputLabel htmlFor="standard-adornment-password" shrink>
-              Brand Name
+              Product Id
             </InputLabel>
             <Input
-              {...register("brandName")}
-              error={errors.brandName ? true : false}
+              {...register("productId")}
+              error={errors.productId ? true : false}
               id="standard-adornment-password"
               type="text"
             />
@@ -153,47 +148,7 @@ const EditProductPage = () => {
               id="outlined-weight-helper-text"
               sx={{ color: "#d50000" }}
             >
-              {errors.brandName?.message}
-            </FormHelperText>
-          </FormControl>
-          <FormControl
-            sx={{ width: "100%", margin: "1em 0 1em 0" }}
-            variant="standard"
-          >
-            <InputLabel htmlFor="standard-adornment-password" shrink>
-              Description
-            </InputLabel>
-            <Input
-              {...register("description")}
-              error={errors.description ? true : false}
-              id="standard-adornment-password"
-              type="text"
-            />
-            <FormHelperText
-              id="outlined-weight-helper-text"
-              sx={{ color: "#d50000" }}
-            >
-              {errors.description?.message}
-            </FormHelperText>
-          </FormControl>
-          <FormControl
-            sx={{ width: "100%", margin: "1em 0 1em 0" }}
-            variant="standard"
-          >
-            <InputLabel htmlFor="standard-adornment-password" shrink>
-              Model
-            </InputLabel>
-            <Input
-              {...register("model")}
-              error={errors.model ? true : false}
-              id="standard-adornment-password"
-              type="text"
-            />
-            <FormHelperText
-              id="outlined-weight-helper-text"
-              sx={{ color: "#d50000" }}
-            >
-              {errors.model?.message}
+              {errors.productId?.message}
             </FormHelperText>
           </FormControl>
           <FormControl
@@ -221,11 +176,11 @@ const EditProductPage = () => {
             variant="standard"
           >
             <InputLabel htmlFor="standard-adornment-password" shrink>
-              Price Per Unit
+              Store
             </InputLabel>
             <Input
-              {...register("pricePerUnit")}
-              error={errors.pricePerUnit ? true : false}
+              {...register("store")}
+              error={errors.store ? true : false}
               id="standard-adornment-password"
               type="text"
             />
@@ -233,22 +188,22 @@ const EditProductPage = () => {
               id="outlined-weight-helper-text"
               sx={{ color: "#d50000" }}
             >
-              {errors.pricePerUnit?.message}
+              {errors.store?.message}
             </FormHelperText>
-            <Box sx={{ marginTop: "2em" }}>
-              <Button
-                type="submit"
-                variant="contained"
-                sx={{ width: "100%", borderRadius: "20px" }}
-              >
-                Submit
-              </Button>
-            </Box>
           </FormControl>
+          <Box sx={{ marginTop: "2em" }}>
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{ width: "100%", borderRadius: "20px" }}
+            >
+              Submit
+            </Button>
+          </Box>
         </form>
       )}
     </StyledParentBox>
   );
 };
 
-export default EditProductPage;
+export default EditOutgoingProductPage;

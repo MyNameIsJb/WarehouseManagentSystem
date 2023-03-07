@@ -21,6 +21,9 @@ import PurchasePage from "./features/Purchase/PurchasePage";
 import IncomingProductPage from "./features/IncomingProduct/IncomingProductPage";
 import CreateIncomingProductPage from "./features/IncomingProduct/CreateIncomingProductPage";
 import EditIncomingProductPage from "./features/IncomingProduct/EditIncomingProductPage";
+import OutgoingProductPage from "./features/OutgoingProduct/OutgoingProductPage";
+import CreateOutgoingProductPage from "./features/OutgoingProduct/CreateOutgoingProductPage";
+import EditOutgoingProductPage from "./features/OutgoingProduct/EditOutgoingProductPage";
 
 function App() {
   return (
@@ -58,6 +61,15 @@ function App() {
           <Route
             path="/editIncomingProduct/:id"
             element={<EditIncomingProductPage />}
+          />
+          <Route path="/outgoingProduct" element={<OutgoingProductPage />} />
+          <Route
+            path="/createOutgoingProduct"
+            element={<CreateOutgoingProductPage />}
+          />
+          <Route
+            path="/editOutgoingProduct/:id"
+            element={<EditOutgoingProductPage />}
           />
         </Route>
       </Routes>

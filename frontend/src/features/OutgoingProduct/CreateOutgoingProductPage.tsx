@@ -16,10 +16,10 @@ import { styled } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
 import { useAppDispatch } from "../../store/store";
 import {
-  createProductAction,
-  getAllProductsAction,
+  createOutgoingProductAction,
+  getAllOutgoingProductsAction,
   itemsInterface,
-} from "./productListSlice";
+} from "./outgoingProductSlice";
 
 const StyledParentBox = styled(Box)(({ theme }) => ({
   width: "50%",
@@ -39,15 +39,13 @@ const StyledParentBox = styled(Box)(({ theme }) => ({
 
 const schema = yup
   .object({
-    brandName: yup.string().required("Brand name is required"),
-    description: yup.string().required("Description is required"),
-    model: yup.string().required("Model is required"),
+    productId: yup.string().required("Brand name is required"),
     quantity: yup.number().required("Quantity is required"),
-    pricePerUnit: yup.string().required("Price per unit is required"),
+    store: yup.string().required("Store is required"),
   })
   .required();
 
-const CreateProductPage = () => {
+const CreateOutgoingProductPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const {
@@ -60,13 +58,17 @@ const CreateProductPage = () => {
   });
 
   const onSubmit = (data: itemsInterface) => {
-    dispatch(createProductAction(data))
+    dispatch(createOutgoingProductAction(data))
       .unwrap()
       .then(() => {
-        dispatch(getAllProductsAction(1));
-        navigate("/productList");
+        dispatch(getAllOutgoingProductsAction(1));
+        navigate("/outgoingProduct");
       });
-    reset();
+    reset({
+      productId: "",
+      quantity: 0,
+      store: "",
+    });
   };
 
   return (
@@ -83,11 +85,11 @@ const CreateProductPage = () => {
           component="h1"
           sx={{ fontWeight: "bold", color: "inherit" }}
         >
-          Create Product
+          Add Product
         </Typography>
         <Button
           color="error"
-          onClick={() => navigate("/productList")}
+          onClick={() => navigate("/outgoingProduct")}
           variant="contained"
         >
           <CloseIcon />
@@ -99,57 +101,20 @@ const CreateProductPage = () => {
           variant="standard"
         >
           <InputLabel htmlFor="standard-adornment-password">
-            Brand Name
+            Product Id
           </InputLabel>
           <Input
-            {...register("brandName")}
-            error={errors.brandName ? true : false}
+            {...register("productId")}
+            error={errors.productId ? true : false}
             id="standard-adornment-password"
             type="text"
+            autoFocus
           />
           <FormHelperText
             id="outlined-weight-helper-text"
             sx={{ color: "#d50000" }}
           >
-            {errors.brandName?.message}
-          </FormHelperText>
-        </FormControl>
-        <FormControl
-          sx={{ width: "100%", margin: "1em 0 1em 0" }}
-          variant="standard"
-        >
-          <InputLabel htmlFor="standard-adornment-password">
-            Description
-          </InputLabel>
-          <Input
-            {...register("description")}
-            error={errors.description ? true : false}
-            id="standard-adornment-password"
-            type="text"
-          />
-          <FormHelperText
-            id="outlined-weight-helper-text"
-            sx={{ color: "#d50000" }}
-          >
-            {errors.description?.message}
-          </FormHelperText>
-        </FormControl>
-        <FormControl
-          sx={{ width: "100%", margin: "1em 0 1em 0" }}
-          variant="standard"
-        >
-          <InputLabel htmlFor="standard-adornment-password">Model</InputLabel>
-          <Input
-            {...register("model")}
-            error={errors.model ? true : false}
-            id="standard-adornment-password"
-            type="text"
-          />
-          <FormHelperText
-            id="outlined-weight-helper-text"
-            sx={{ color: "#d50000" }}
-          >
-            {errors.model?.message}
+            {errors.productId?.message}
           </FormHelperText>
         </FormControl>
         <FormControl
@@ -176,12 +141,10 @@ const CreateProductPage = () => {
           sx={{ width: "100%", margin: "1em 0 1em 0" }}
           variant="standard"
         >
-          <InputLabel htmlFor="standard-adornment-password">
-            Price Per Unit
-          </InputLabel>
+          <InputLabel htmlFor="standard-adornment-password">Store</InputLabel>
           <Input
-            {...register("pricePerUnit")}
-            error={errors.pricePerUnit ? true : false}
+            {...register("store")}
+            error={errors.store ? true : false}
             id="standard-adornment-password"
             type="text"
           />
@@ -189,7 +152,7 @@ const CreateProductPage = () => {
             id="outlined-weight-helper-text"
             sx={{ color: "#d50000" }}
           >
-            {errors.pricePerUnit?.message}
+            {errors.store?.message}
           </FormHelperText>
         </FormControl>
         <Box sx={{ marginTop: "2em" }}>
@@ -206,4 +169,4 @@ const CreateProductPage = () => {
   );
 };
 
-export default CreateProductPage;
+export default CreateOutgoingProductPage;
