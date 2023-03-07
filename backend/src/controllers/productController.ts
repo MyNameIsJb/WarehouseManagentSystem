@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import crypto from "crypto";
 import mongoose from "mongoose";
 import Product from "../models/Product";
 
@@ -27,20 +28,15 @@ export const getAllProductsController = async (req: Request, res: Response) => {
 };
 
 export const createProductController = async (req: Request, res: Response) => {
-  const { productId, brandName, description, model, quantity, pricePerUnit } =
-    req.body;
+  const { brandName, description, model, quantity, pricePerUnit } = req.body;
 
   try {
-    const existingProductId = await Product.findOne({ productId });
-    if (existingProductId)
-      return res.status(400).json({ message: "Product ID already exist" });
-
     const existingModel = await Product.findOne({ model });
     if (existingModel)
       return res.status(400).json({ message: "Model already exist" });
 
     await Product.create({
-      productId,
+      productId: crypto.randomBytes(8).toString("hex"),
       brandName,
       description,
       model,
@@ -70,20 +66,11 @@ export const getProductById = async (req: Request, res: Response) => {
 
 export const updateProductController = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { productId, brandName, description, model, quantity, pricePerUnit } =
-    req.body;
+  const { brandName, description, model, quantity, pricePerUnit } = req.body;
 
   try {
     if (!mongoose.Types.ObjectId.isValid(id))
       return res.status(404).json({ message: "Invalid ID" });
-
-    const checkProductQuery = {
-      _id: { $ne: id },
-      productId: productId,
-    };
-    const existingProductId = await Product.findOne(checkProductQuery);
-    if (existingProductId)
-      return res.status(400).json({ message: "Product ID already exist" });
 
     const checkModelQuery = {
       _id: { $ne: id },
@@ -97,7 +84,6 @@ export const updateProductController = async (req: Request, res: Response) => {
     await Product.findByIdAndUpdate(
       existingId,
       {
-        productId: productId,
         brandName: brandName,
         description: description,
         model: model,

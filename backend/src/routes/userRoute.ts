@@ -23,7 +23,7 @@ router.post("/createPassword", createPasswordController);
 
 // With token
 router.get("/getProfile", middleware, getProfileController);
-router.get("/getAllUsers", getAllUsersController);
+router.get("/getAllUsers", middleware, getAllUsersController);
 router.post("/createUser", middleware, createUserController);
 router.get("/getUser/:id", middleware, getUserById);
 router.post("/updateUser/:id", middleware, updateUserController);

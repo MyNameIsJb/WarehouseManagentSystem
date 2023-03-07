@@ -11,6 +11,8 @@ export interface itemsInterface {
   quantity: number;
   totalPrice: string;
   dateOfTransaction: Date;
+  store: string | void;
+  productId: string;
 }
 
 export interface paginationInterface {
@@ -18,31 +20,31 @@ export interface paginationInterface {
   pageCount: number;
 }
 
-export interface incomingProductInterface {
+export interface outgoingProductInterface {
   pagination: paginationInterface;
   items: itemsInterface[];
 }
 
-interface IncomingProductState {
-  incomingProducts: incomingProductInterface | null;
-  singleIncomingProduct: itemsInterface | null;
+interface OutgoingProductState {
+  outgoingProducts: outgoingProductInterface | null;
+  singleOutgoingProduct: itemsInterface | null;
   loading: boolean;
   errors: any;
 }
 
-const initialState: IncomingProductState = {
-  incomingProducts: null,
-  singleIncomingProduct: null,
+const initialState: OutgoingProductState = {
+  outgoingProducts: null,
+  singleOutgoingProduct: null,
   loading: false,
   errors: null,
 };
 
-export const getAllIncomingProductsAction = createAsyncThunk<
-  incomingProductInterface,
+export const getAllOutgoingProductsAction = createAsyncThunk<
+  outgoingProductInterface,
   number
->("incomingProduct/getAllIncomingProductsAction", async (page, thunkAPI) => {
+>("outgoingProduct/getAllOutgoingProductsAction", async (page, thunkAPI) => {
   try {
-    const response = await api.getAllIncomingProductsAPI(page);
+    const response = await api.getAllOutgoingProductsAPI(page);
     return response.data;
   } catch (error: any) {
     Swal.fire({
@@ -55,12 +57,12 @@ export const getAllIncomingProductsAction = createAsyncThunk<
   }
 });
 
-export const createIncomingProductAction = createAsyncThunk<
+export const createOutgoingProductAction = createAsyncThunk<
   object,
   itemsInterface
->("incomingProduct/createIncomingProductAction", async (data, thunkAPI) => {
+>("outgoingProduct/createOutgoingProductAction", async (data, thunkAPI) => {
   try {
-    const response = await api.createIncomingProductAPI(data);
+    const response = await api.createOutgoingProductAPI(data);
     Swal.fire({
       title: "Success!",
       text: response.data.message,
@@ -79,12 +81,12 @@ export const createIncomingProductAction = createAsyncThunk<
   }
 });
 
-export const getIncomingProductAction = createAsyncThunk<
+export const getOutgoingProductAction = createAsyncThunk<
   itemsInterface,
   string | undefined
->("incomingProduct/getIncomingProductAction", async (id, thunkAPI) => {
+>("outgoingProduct/getOutgoingProductAction", async (id, thunkAPI) => {
   try {
-    const response = await api.getIncomingProductAPI(id);
+    const response = await api.getOutgoingProductAPI(id);
     return response.data;
   } catch (error: any) {
     Swal.fire({
@@ -97,12 +99,12 @@ export const getIncomingProductAction = createAsyncThunk<
   }
 });
 
-export const updateIncomingProductAction = createAsyncThunk<
+export const updateOutgoingProductAction = createAsyncThunk<
   object,
   itemsInterface
->("incomingProduct/updateIncomingProductAction", async (data, thunkAPI) => {
+>("outgoingProduct/updateOutgoingProductAction", async (data, thunkAPI) => {
   try {
-    const response = await api.updateIncomingProductAPI(data);
+    const response = await api.updateOutgoingProductAPI(data);
     Swal.fire({
       title: "Success!",
       text: response.data.message,
@@ -121,19 +123,19 @@ export const updateIncomingProductAction = createAsyncThunk<
   }
 });
 
-export const deleteIncomingProductAction = createAsyncThunk<
+export const deleteOutgoingProductAction = createAsyncThunk<
   object,
   string | undefined
->("incomingProduct/deleteIncomingProductAction", async (id, thunkAPI) => {
+>("outgoingProduct/deleteOutgoingProductAction", async (id, thunkAPI) => {
   try {
-    const response = await api.deleteIncomingProductAPI(id);
+    const response = await api.deleteOutgoingProductAPI(id);
     Swal.fire({
       title: "Success!",
       text: response.data.message,
       icon: "success",
       timer: 2000,
     });
-    thunkAPI.dispatch(getAllIncomingProductsAction(1));
+    thunkAPI.dispatch(getAllOutgoingProductsAction(1));
   } catch (error: any) {
     Swal.fire({
       title: "Error!",
@@ -145,64 +147,64 @@ export const deleteIncomingProductAction = createAsyncThunk<
   }
 });
 
-export const incomingProductSlice = createSlice({
-  name: "incomingProduct",
+export const outgoingProductSlice = createSlice({
+  name: "outgoingProduct",
   initialState,
   reducers: {
-    removeSingleIncomingProductAction: (state) => {
-      state.singleIncomingProduct = null;
+    removeSingleOutgoingProductAction: (state) => {
+      state.singleOutgoingProduct = null;
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getAllIncomingProductsAction.pending, (state) => {
+    builder.addCase(getAllOutgoingProductsAction.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(getAllIncomingProductsAction.fulfilled, (state, action) => {
-      state.incomingProducts = action.payload;
+    builder.addCase(getAllOutgoingProductsAction.fulfilled, (state, action) => {
+      state.outgoingProducts = action.payload;
       state.loading = false;
     });
-    builder.addCase(getAllIncomingProductsAction.rejected, (state, action) => {
+    builder.addCase(getAllOutgoingProductsAction.rejected, (state, action) => {
       state.errors = action.payload;
       state.loading = false;
     });
-    builder.addCase(createIncomingProductAction.pending, (state) => {
+    builder.addCase(createOutgoingProductAction.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(createIncomingProductAction.fulfilled, (state, action) => {
+    builder.addCase(createOutgoingProductAction.fulfilled, (state, action) => {
       state.loading = false;
     });
-    builder.addCase(createIncomingProductAction.rejected, (state, action) => {
+    builder.addCase(createOutgoingProductAction.rejected, (state, action) => {
       state.errors = action.payload;
       state.loading = false;
     });
-    builder.addCase(getIncomingProductAction.pending, (state) => {
+    builder.addCase(getOutgoingProductAction.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(getIncomingProductAction.fulfilled, (state, action) => {
-      state.singleIncomingProduct = action.payload;
+    builder.addCase(getOutgoingProductAction.fulfilled, (state, action) => {
+      state.singleOutgoingProduct = action.payload;
       state.loading = false;
     });
-    builder.addCase(getIncomingProductAction.rejected, (state, action) => {
+    builder.addCase(getOutgoingProductAction.rejected, (state, action) => {
       state.errors = action.payload;
       state.loading = false;
     });
-    builder.addCase(updateIncomingProductAction.pending, (state) => {
+    builder.addCase(updateOutgoingProductAction.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(updateIncomingProductAction.fulfilled, (state, action) => {
+    builder.addCase(updateOutgoingProductAction.fulfilled, (state, action) => {
       state.loading = false;
     });
-    builder.addCase(updateIncomingProductAction.rejected, (state, action) => {
+    builder.addCase(updateOutgoingProductAction.rejected, (state, action) => {
       state.errors = action.payload;
       state.loading = false;
     });
-    builder.addCase(deleteIncomingProductAction.pending, (state) => {
+    builder.addCase(deleteOutgoingProductAction.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(deleteIncomingProductAction.fulfilled, (state, action) => {
+    builder.addCase(deleteOutgoingProductAction.fulfilled, (state, action) => {
       state.loading = false;
     });
-    builder.addCase(deleteIncomingProductAction.rejected, (state, action) => {
+    builder.addCase(deleteOutgoingProductAction.rejected, (state, action) => {
       state.errors = action.payload;
       state.loading = false;
     });
@@ -212,6 +214,6 @@ export const incomingProductSlice = createSlice({
   },
 });
 
-export default incomingProductSlice.reducer;
-export const { removeSingleIncomingProductAction } =
-  incomingProductSlice.actions;
+export default outgoingProductSlice.reducer;
+export const { removeSingleOutgoingProductAction } =
+  outgoingProductSlice.actions;
