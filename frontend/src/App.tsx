@@ -23,6 +23,8 @@ import EditIncomingProductPage from "./features/IncomingProduct/EditIncomingProd
 import OutgoingProductPage from "./features/OutgoingProduct/OutgoingProductPage";
 import CreateOutgoingProductPage from "./features/OutgoingProduct/CreateOutgoingProductPage";
 import EditOutgoingProductPage from "./features/OutgoingProduct/EditOutgoingProductPage";
+import AdminMenu from "./components/AdminMenu";
+import StockReplenishmentPage from "./features/StockReplenishment/StockReplenishmentPage";
 
 function App() {
   return (
@@ -39,36 +41,42 @@ function App() {
           element={<CreatePasswordPage />}
         />
         <Route element={<ProtectedRoute />}>
-          <Route path="/employeeList" element={<EmployeeListPage />} />
-          <Route path="/createUser" element={<CreateUserPage />} />
-          <Route path="/editUser/:id" element={<EditUserPage />} />
-          <Route path="/productList" element={<ProductListPage />} />
-          <Route path="/createProduct" element={<CreateProductPage />} />
-          <Route path="editProduct/:id" element={<EditProductPage />} />
+          <Route element={<AdminMenu />}>
+            <Route path="/employeeList" element={<EmployeeListPage />} />
+            <Route path="/createUser" element={<CreateUserPage />} />
+            <Route path="/editUser/:id" element={<EditUserPage />} />
+            <Route path="/productList" element={<ProductListPage />} />
+            <Route path="/createProduct" element={<CreateProductPage />} />
+            <Route path="editProduct/:id" element={<EditProductPage />} />
+            <Route path="/uploadImage" element={<UploadImagePage />} />
+            <Route path="/editImage/:id" element={<EditImagePage />} />
+            <Route path="/inventory" element={<InventoryPage />} />
+            <Route path="/sale" element={<SalePage />} />
+            <Route path="/purchase" element={<PurchasePage />} />
+            <Route
+              path="/createIncomingProduct"
+              element={<CreateIncomingProductPage />}
+            />
+            <Route
+              path="/editIncomingProduct/:id"
+              element={<EditIncomingProductPage />}
+            />
+            <Route
+              path="/createOutgoingProduct"
+              element={<CreateOutgoingProductPage />}
+            />
+            <Route
+              path="/editOutgoingProduct/:id"
+              element={<EditOutgoingProductPage />}
+            />
+            <Route
+              path="/stockReplenishment"
+              element={<StockReplenishmentPage />}
+            />
+          </Route>
           <Route path="/gallery" element={<GalleryPage />} />
-          <Route path="/uploadImage" element={<UploadImagePage />} />
-          <Route path="/editImage/:id" element={<EditImagePage />} />
-          <Route path="/inventory" element={<InventoryPage />} />
-          <Route path="/sale" element={<SalePage />} />
-          <Route path="/purchase" element={<PurchasePage />} />
           <Route path="/incomingProduct" element={<IncomingProductPage />} />
-          <Route
-            path="/createIncomingProduct"
-            element={<CreateIncomingProductPage />}
-          />
-          <Route
-            path="/editIncomingProduct/:id"
-            element={<EditIncomingProductPage />}
-          />
           <Route path="/outgoingProduct" element={<OutgoingProductPage />} />
-          <Route
-            path="/createOutgoingProduct"
-            element={<CreateOutgoingProductPage />}
-          />
-          <Route
-            path="/editOutgoingProduct/:id"
-            element={<EditOutgoingProductPage />}
-          />
         </Route>
       </Routes>
     </BrowserRouter>

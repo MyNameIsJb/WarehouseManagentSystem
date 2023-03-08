@@ -33,6 +33,7 @@ const LoginPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const levelOfAccess = localStorage.getItem("levelOfAccess");
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
@@ -70,8 +71,10 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
-    if (token !== null) return navigate("/dashboard");
-  }, [token, navigate]);
+    if (levelOfAccess === "Administrator") return navigate("/employeeList");
+    if (levelOfAccess === "Employee") return navigate("/gallery");
+    if (levelOfAccess === "Client") return navigate("/gallery");
+  }, [levelOfAccess, navigate]);
 
   return (
     <>

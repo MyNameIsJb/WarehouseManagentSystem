@@ -21,6 +21,7 @@ import saleReducer from "../features/Sale/saleSlice";
 import purchaseReducer from "../features/Purchase/purchaseSlice";
 import incomingProductReducer from "../features/IncomingProduct/incomingProductSlice";
 import outgoingProductReducer from "../features/OutgoingProduct/outgoingProductSlice";
+import orderProductReducer from "../features/StockReplenishment/stockReplenishmentSlice";
 
 const persistConfig = {
   key: "root",
@@ -39,6 +40,7 @@ const reducer = combineReducers({
   purchase: purchaseReducer,
   incomingProduct: incomingProductReducer,
   outgoingProduct: outgoingProductReducer,
+  orderProduct: orderProductReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

@@ -40,6 +40,7 @@ export const signInAction = createAsyncThunk<LoginInterface, LoginInterface>(
     try {
       const response = await api.signInAPI(data);
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("levelOfAccess", response.data.levelOfAccess);
       Swal.fire({
         title: "Success!",
         text: response.data.message,
@@ -85,6 +86,7 @@ export const loginSlice = createSlice({
   reducers: {
     logoutAction: (state) => {
       localStorage.removeItem("token");
+      localStorage.removeItem("levelOfAccess");
       Swal.fire({
         title: "Success!",
         text: "Logout Successfully",
@@ -94,6 +96,7 @@ export const loginSlice = createSlice({
     },
     setForcedLogoutAction: (state) => {
       localStorage.removeItem("token");
+      localStorage.removeItem("levelOfAccess");
     },
   },
   extraReducers: (builder) => {
