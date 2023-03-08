@@ -25,6 +25,8 @@ import CreateOutgoingProductPage from "./features/OutgoingProduct/CreateOutgoing
 import EditOutgoingProductPage from "./features/OutgoingProduct/EditOutgoingProductPage";
 import AdminMenu from "./components/AdminMenu";
 import StockReplenishmentPage from "./features/StockReplenishment/StockReplenishmentPage";
+import DailyAttendancePage from "./features/DailyAttendance/DailyAttendancePage";
+import ReturnedItemPage from "./features/ReturnedItem/ReturnedItemPage";
 
 function App() {
   return (
@@ -73,6 +75,8 @@ function App() {
               path="/stockReplenishment"
               element={<StockReplenishmentPage />}
             />
+            <Route path="/dailyAttendance" element={<DailyAttendancePage />} />
+            <Route path="/returnedItems" element={<ReturnedItemPage />} />
           </Route>
           <Route path="/gallery" element={<GalleryPage />} />
           <Route path="/incomingProduct" element={<IncomingProductPage />} />
