@@ -22,6 +22,8 @@ import purchaseReducer from "../features/Purchase/purchaseSlice";
 import incomingProductReducer from "../features/IncomingProduct/incomingProductSlice";
 import outgoingProductReducer from "../features/OutgoingProduct/outgoingProductSlice";
 import orderProductReducer from "../features/StockReplenishment/stockReplenishmentSlice";
+import dailyAttendanceReducer from "../features/DailyAttendance/dailyAttendanceSlice";
+import returnedItemReducer from "../features/ReturnedItem/returnedItemSlice";
 
 const persistConfig = {
   key: "root",
@@ -41,6 +43,8 @@ const reducer = combineReducers({
   incomingProduct: incomingProductReducer,
   outgoingProduct: outgoingProductReducer,
   orderProduct: orderProductReducer,
+  dailyAttendance: dailyAttendanceReducer,
+  returnedItem: returnedItemReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

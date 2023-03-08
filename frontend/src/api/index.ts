@@ -30,6 +30,12 @@ const authOutgoingProductAPI = axios.create({
 const authOrderProductAPI = axios.create({
   baseURL: "http://localhost:8080/orderProduct",
 });
+const authDailyAttendance = axios.create({
+  baseURL: "http://localhost:8080/dailyAttendance",
+});
+const authReturnedItem = axios.create({
+  baseURL: "http://localhost:8080/returnedItem",
+});
 
 authUserAPI.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
@@ -37,50 +43,55 @@ authUserAPI.interceptors.request.use((req) => {
   }
   return req;
 });
-
 authProductAPI.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
     req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
   }
   return req;
 });
-
 authGalleryAPI.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
     req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
   }
   return req;
 });
-
 authSaleAPI.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
     req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
   }
   return req;
 });
-
 authPurchaseAPI.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
     req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
   }
   return req;
 });
-
 authIncomingProductAPI.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
     req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
   }
   return req;
 });
-
 authOutgoingProductAPI.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
     req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
   }
   return req;
 });
-
 authOrderProductAPI.interceptors.request.use((req) => {
+  if (localStorage.getItem("token")) {
+    req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
+  }
+  return req;
+});
+authDailyAttendance.interceptors.request.use((req) => {
+  if (localStorage.getItem("token")) {
+    req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
+  }
+  return req;
+});
+authReturnedItem.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
     req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
   }
@@ -173,3 +184,11 @@ export const deleteOutgoingProductAPI = (id: string | undefined) =>
 // Order Product Router
 export const getAllOrderProductsAPI = (page: number | any) =>
   authOrderProductAPI.get("/getAllOrderProducts", { params: { page: page } });
+
+// Daily Attendance Router
+export const getAllDailyAttendanceAPI = (page: number | any) =>
+  authDailyAttendance.get("/getAllDailyAttendance", { params: { page: page } });
+
+// Returned Item Router
+export const getAllReturnedItemsAPI = (page: number | any) =>
+  authReturnedItem.get("/getAllReturnedItems", { params: { page: page } });

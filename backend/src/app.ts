@@ -18,6 +18,8 @@ import purchaseRouter from "./routes/purchaseRoute";
 import incomingProductRouter from "./routes/incomingProductRoute";
 import outgoingProductRouter from "./routes/outgoingProductRoute";
 import orderProductRouter from "./routes/orderProductRoute";
+import dailyAttendanceRouter from "./routes/dailyAttendanceRoute";
+import returnedItemRouter from "./routes/returnedItemRoute";
 
 // Declare routes path
 app.use("/user", userRoute);
@@ -28,5 +30,7 @@ app.use("/purchase", purchaseRouter);
 app.use("/incomingProduct", incomingProductRouter);
 app.use("/outgoingProduct", outgoingProductRouter);
 app.use("/orderProduct", orderProductRouter);
+app.use("/dailyAttendance", dailyAttendanceRouter);
+app.use("/returnedItem", returnedItemRouter);
 
 export { app };
