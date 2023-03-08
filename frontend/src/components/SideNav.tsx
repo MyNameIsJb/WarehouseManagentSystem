@@ -10,7 +10,6 @@ import {
   ListItemText,
   SwipeableDrawer,
 } from "@mui/material";
-import SpeedIcon from "@mui/icons-material/Speed";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import CollectionsIcon from "@mui/icons-material/Collections";
@@ -29,7 +28,6 @@ import { useAppSelector } from "../store/store";
 type Anchor = "left";
 
 export const adminMenu = [
-  { route: "dashboard", link: "Dashboard" },
   { route: "employeeList", link: "Employee List" },
   { route: "productList", link: "Product List" },
   { route: "gallery", link: "Gallery" },
@@ -44,7 +42,6 @@ export const adminMenu = [
 ];
 
 export const empMenu = [
-  { route: "dashboard", link: "Dashboard" },
   { route: "gallery", link: "Gallery" },
   { route: "barcodeGenerator", link: "Barcode Generator" },
   { route: "incomingProduct", link: "Incoming Product" },
@@ -53,7 +50,6 @@ export const empMenu = [
 ];
 
 export const clientMenu = [
-  { route: "dashboard", link: "Dashboard" },
   { route: "gallery", link: "Gallery" },
   { route: "inventory", link: "Inventory" },
   { route: "incomingProduct", link: "Incoming Product" },
@@ -66,7 +62,7 @@ const SideNav = () => {
   const [state, setState] = useState({
     left: false,
   });
-  const { profileData } = useAppSelector((state) => state.dashboard);
+  const { profileData } = useAppSelector((state) => state.login);
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
@@ -97,9 +93,7 @@ const SideNav = () => {
                 <ListItem key={index} disablePadding>
                   <ListItemButton>
                     <ListItemIcon>
-                      {text.link === "Dashboard" ? (
-                        <SpeedIcon />
-                      ) : text.link === "Employee List" ? (
+                      {text.link === "Employee List" ? (
                         <PersonAddIcon />
                       ) : text.link === "Product List" ? (
                         <AddShoppingCartIcon />
@@ -136,9 +130,7 @@ const SideNav = () => {
                 <ListItem key={index} disablePadding>
                   <ListItemButton>
                     <ListItemIcon>
-                      {text.link === "Dashboard" ? (
-                        <SpeedIcon />
-                      ) : text.link === "Gallery" ? (
+                      {text.link === "Gallery" ? (
                         <CollectionsIcon />
                       ) : text.link === "Barcode Generator" ? (
                         <HorizontalSplitIcon />
@@ -163,9 +155,7 @@ const SideNav = () => {
                 <ListItem key={index} disablePadding>
                   <ListItemButton>
                     <ListItemIcon>
-                      {text.link === "Dashboard" ? (
-                        <SpeedIcon />
-                      ) : text.link === "Gallery" ? (
+                      {text.link === "Gallery" ? (
                         <CollectionsIcon />
                       ) : text.link === "Inventory" ? (
                         <InventoryIcon />

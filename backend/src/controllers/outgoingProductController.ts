@@ -125,6 +125,7 @@ export const updateOutgoingProductController = async (
     await OutgoingProduct.findByIdAndUpdate(
       existingId,
       {
+        productId,
         brandName: existingProduct.brandName,
         description: existingProduct.description,
         model: existingProduct.model,
