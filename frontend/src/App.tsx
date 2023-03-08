@@ -5,7 +5,6 @@ import ForgotPasswordPage from "./features/ForgotPassword/ForgotPasswordPage";
 import ResetPasswordPage from "./features/ResetPassword/ResetPasswordPage";
 import CreatePasswordPage from "./features/CreatePassword/CreatePasswordPage";
 import ProtectedRoute from "./components/ProtectedRoute";
-import DashboardPage from "./features/Dashboard/DashboardPage";
 import EmployeeListPage from "./features/EmployeeList/EmployeeListPage";
 import CreateUserPage from "./features/EmployeeList/CreateUserPage";
 import EditUserPage from "./features/EmployeeList/EditUserPage";
@@ -40,7 +39,6 @@ function App() {
           element={<CreatePasswordPage />}
         />
         <Route element={<ProtectedRoute />}>
-          <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/employeeList" element={<EmployeeListPage />} />
           <Route path="/createUser" element={<CreateUserPage />} />
           <Route path="/editUser/:id" element={<EditUserPage />} />

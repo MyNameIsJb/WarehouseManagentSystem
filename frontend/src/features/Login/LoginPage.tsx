@@ -54,8 +54,13 @@ const LoginPage = () => {
   const onSubmit = (data: LoginInterface) => {
     dispatch(signInAction(data))
       .unwrap()
-      .then(() => {
-        navigate("/dashboard");
+      .then((result) => {
+        if (result.levelOfAccess === "Administrator")
+          return navigate("/employeeList");
+
+        if (result.levelOfAccess === "Employee") return navigate("/gallery");
+
+        if (result.levelOfAccess === "Client") return navigate("/gallery");
         reset();
       });
     reset({

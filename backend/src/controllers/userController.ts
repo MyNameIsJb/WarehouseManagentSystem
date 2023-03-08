@@ -40,6 +40,7 @@ export const signInController = async (req: Request, res: Response) => {
 
     res.status(200).json({
       token,
+      levelOfAccess: existingUser.levelOfAccess,
       message: "Successfully logged in",
     });
   } catch (error) {

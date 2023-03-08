@@ -12,7 +12,6 @@ import {
 } from "redux-persist";
 import { combineReducers } from "@reduxjs/toolkit";
 import loginReducer from "../features/Login/loginSlice";
-import dashboardReducer from "../features/Dashboard/dashboardSlice";
 import forgotPasswordReducer from "../features/ForgotPassword/forgotPasswordSlice";
 import resetPasswordReducer from "../features/ResetPassword/resetPasswordSlice";
 import employeeListReducer from "../features/EmployeeList/employeeListSlice";
@@ -33,7 +32,6 @@ const reducer = combineReducers({
   login: loginReducer,
   forgotPassword: forgotPasswordReducer,
   resetPassword: resetPasswordReducer,
-  dashboard: dashboardReducer,
   employeeList: employeeListReducer,
   productList: productListReducer,
   gallery: galleryReducer,
