@@ -27,6 +27,9 @@ const authIncomingProductAPI = axios.create({
 const authOutgoingProductAPI = axios.create({
   baseURL: "http://localhost:8080/outgoingProduct",
 });
+const authOrderProductAPI = axios.create({
+  baseURL: "http://localhost:8080/orderProduct",
+});
 
 authUserAPI.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
@@ -71,6 +74,13 @@ authIncomingProductAPI.interceptors.request.use((req) => {
 });
 
 authOutgoingProductAPI.interceptors.request.use((req) => {
+  if (localStorage.getItem("token")) {
+    req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
+  }
+  return req;
+});
+
+authOrderProductAPI.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
     req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
   }
@@ -159,3 +169,7 @@ export const updateOutgoingProductAPI = (data: object | any) =>
   authOutgoingProductAPI.put(`/updateOutgoingProduct/${data.id}`, data);
 export const deleteOutgoingProductAPI = (id: string | undefined) =>
   authOutgoingProductAPI.delete(`/deleteOutgoingProduct/${id}`);
+
+// Order Product Router
+export const getAllOrderProductsAPI = (page: number | any) =>
+  authOrderProductAPI.get("/getAllOrderProducts", { params: { page: page } });

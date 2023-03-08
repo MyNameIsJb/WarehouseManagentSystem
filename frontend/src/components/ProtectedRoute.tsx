@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { Container, CircularProgress, Typography } from "@mui/material";
-import { useAppSelector } from "../store/store";
+import { useAppDispatch, useAppSelector } from "../store/store";
 import TopNav from "./TopNav";
 import Box from "@mui/material/Box";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
+import { setForcedLogoutAction } from "../features/Login/loginSlice";
 
 const ProtectedRoute = () => {
   const token = localStorage.getItem("token");
   const { loading } = useAppSelector((state) => state.login);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (!token) {
+      dispatch({ type: "LOGOUT" });
+      dispatch(setForcedLogoutAction());
+    }
+  }, [token, dispatch]);
 
   if (token === null) {
     return (
