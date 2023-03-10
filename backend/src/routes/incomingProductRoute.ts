@@ -4,6 +4,7 @@ import {
   deleteIncomingProductController,
   getAllIncomingProductsController,
   getIncomingProductByIdController,
+  receivedIncomingProductController,
   updateIncomingProductController,
 } from "../controllers/incomingProductController";
 import middleware from "../middleware/middleware";
@@ -34,6 +35,11 @@ router.delete(
   "/deleteIncomingProduct/:id",
   middleware,
   deleteIncomingProductController
+);
+router.post(
+  "/receivedIncomingProduct/:id",
+  middleware,
+  receivedIncomingProductController
 );
 
 export default router;

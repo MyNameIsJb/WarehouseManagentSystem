@@ -15,7 +15,7 @@ export interface DailyAttendanceInterface {
 const DailyAttendanceSchema = new Schema<DailyAttendanceInterface>({
   name: { type: String, required: true },
   activity: { type: String, required: true },
-  productId: { type: String, required: true },
+  productId: { type: String, default: "N/A" },
   brandName: { type: String, required: true },
   description: { type: String, required: true },
   model: { type: String, required: true },

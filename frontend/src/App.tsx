@@ -71,10 +71,6 @@ function App() {
               path="/editOutgoingProduct/:id"
               element={<EditOutgoingProductPage />}
             />
-            <Route
-              path="/stockReplenishment"
-              element={<StockReplenishmentPage />}
-            />
             <Route path="/dailyAttendance" element={<DailyAttendancePage />} />
             <Route path="/returnedItems" element={<ReturnedItemPage />} />
           </Route>
@@ -83,6 +79,10 @@ function App() {
           <Route path="/incomingProduct" element={<IncomingProductPage />} />
           <Route path="/outgoingProduct" element={<OutgoingProductPage />} />
           <Route path="/barcodeGenerator" element={<BarcodeGeneratorPage />} />
+          <Route
+            path="/stockReplenishment"
+            element={<StockReplenishmentPage />}
+          />
         </Route>
       </Routes>
     </BrowserRouter>

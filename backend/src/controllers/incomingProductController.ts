@@ -2,6 +2,10 @@ import { Request, Response } from "express";
 import crypto from "crypto";
 import IncomingProduct from "../models/IncomingProduct";
 import mongoose from "mongoose";
+import Product from "../models/Product";
+import Purchase from "../models/Purchase";
+import User from "../models/User";
+import DailyAttendance from "../models/DailyAttendance";
 
 export const getAllIncomingProductsController = async (
   req: Request,
@@ -112,6 +116,81 @@ export const deleteIncomingProductController = async (
 
     await IncomingProduct.findByIdAndDelete(id);
     return res.status(203).json({ message: "Deleted product successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+export const receivedIncomingProductController = async (
+  req: Request,
+  res: Response
+) => {
+  const { id } = req.params;
+  const { decoded } = req.body;
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id))
+      return res.status(404).json({ message: "Invalid ID" });
+
+    const existingIncomingProduct = await IncomingProduct.findById({ _id: id });
+    const existingProduct = await Product.findOne({
+      model: existingIncomingProduct?.model,
+    });
+    const existingUser = await User.findOne({ _id: decoded.id });
+
+    if (!existingProduct) {
+      await Purchase.create({
+        dateOfTransaction: new Date(),
+        brandName: existingIncomingProduct?.brandName,
+        description: existingIncomingProduct?.description,
+        model: existingIncomingProduct?.model,
+        quantity: existingIncomingProduct?.quantity,
+        totalPrice: existingIncomingProduct?.totalPrice,
+      });
+      await DailyAttendance.create({
+        name: existingUser?.name,
+        activity: "Received product",
+        brandName: existingIncomingProduct?.brandName,
+        description: existingIncomingProduct?.description,
+        model: existingIncomingProduct?.model,
+        quantity: existingIncomingProduct?.quantity,
+        dateOfActivity: new Date(),
+      });
+      await IncomingProduct.findByIdAndDelete(id);
+      return res
+        .status(200)
+        .json({ message: "Successfully received unregistered product" });
+    } else {
+      await Product.findByIdAndUpdate(
+        existingProduct._id,
+        {
+          quantity:
+            existingProduct.quantity + existingIncomingProduct!.quantity,
+        },
+        { new: true }
+      );
+      await Purchase.create({
+        dateOfTransaction: new Date(),
+        brandName: existingIncomingProduct?.brandName,
+        description: existingIncomingProduct?.description,
+        model: existingIncomingProduct?.model,
+        quantity: existingIncomingProduct?.quantity,
+        totalPrice: existingIncomingProduct?.totalPrice,
+      });
+      await DailyAttendance.create({
+        name: existingUser?.name,
+        activity: "Received product",
+        productId: existingProduct.productId,
+        brandName: existingIncomingProduct?.brandName,
+        description: existingIncomingProduct?.description,
+        model: existingIncomingProduct?.model,
+        quantity: existingIncomingProduct?.quantity,
+        dateOfActivity: new Date(),
+      });
+      await IncomingProduct.findByIdAndDelete(id);
+      return res
+        .status(200)
+        .json({ message: "Successfully received unregistered product" });
+    }
   } catch (error) {
     return res.status(500).json({ message: "Something went wrong" });
   }

@@ -10,6 +10,7 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import CheckIcon from "@mui/icons-material/Check";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import { useAppDispatch, useAppSelector } from "../../store/store";
@@ -17,6 +18,7 @@ import {
   deleteIncomingProductAction,
   getAllIncomingProductsAction,
   itemsInterface,
+  receivedIncomingProductAction,
 } from "./incomingProductSlice";
 import moment from "moment";
 
@@ -27,6 +29,7 @@ const IncomingProductPage = () => {
     (state) => state.incomingProduct
   );
   const [page, setPage] = useState(1);
+  const levelOfAccess = localStorage.getItem("levelOfAccess");
 
   useEffect(() => {
     dispatch(getAllIncomingProductsAction(1));
@@ -54,12 +57,14 @@ const IncomingProductPage = () => {
         >
           Incoming Product
         </Typography>
-        <Button
-          onClick={() => navigate("/createIncomingProduct")}
-          variant="contained"
-        >
-          <AddIcon /> Add Product
-        </Button>
+        {levelOfAccess === "Administrator" && (
+          <Button
+            onClick={() => navigate("/createIncomingProduct")}
+            variant="contained"
+          >
+            <AddIcon /> Add Product
+          </Button>
+        )}
       </Box>
       <Box
         style={{
@@ -96,6 +101,7 @@ const IncomingProductPage = () => {
                   <Td>0 Result</Td>
                   <Td>0 Result</Td>
                   <Td>0 Result</Td>
+                  <Td>0 Result</Td>
                 </Tr>
               ) : (
                 incomingProducts?.items.map(
@@ -121,24 +127,44 @@ const IncomingProductPage = () => {
                               alignItems: "center",
                             }}
                           >
-                            <Link to={`/editIncomingProduct/${item._id}`}>
-                              <Box sx={{ marginRight: "0.5em" }}>
-                                <Button color="success" variant="contained">
-                                  <EditIcon />
+                            {levelOfAccess === "Administrator" ? (
+                              <>
+                                <Link to={`/editIncomingProduct/${item._id}`}>
+                                  <Box sx={{ marginRight: "0.5em" }}>
+                                    <Button color="success" variant="contained">
+                                      <EditIcon />
+                                    </Button>
+                                  </Box>
+                                </Link>
+                                <Box
+                                  onClick={() => {
+                                    dispatch(
+                                      deleteIncomingProductAction(item._id)
+                                    );
+                                    setPage(1);
+                                  }}
+                                  sx={{ marginLeft: "0.5em" }}
+                                >
+                                  <Button color="error" variant="contained">
+                                    <DeleteIcon />
+                                  </Button>
+                                </Box>
+                              </>
+                            ) : (
+                              <Box
+                                onClick={() => {
+                                  dispatch(
+                                    receivedIncomingProductAction(item._id)
+                                  );
+                                  setPage(1);
+                                }}
+                                sx={{ marginLeft: "0.5em" }}
+                              >
+                                <Button color="primary" variant="contained">
+                                  <CheckIcon />
                                 </Button>
                               </Box>
-                            </Link>
-                            <Box
-                              onClick={() => {
-                                dispatch(deleteIncomingProductAction(item._id));
-                                setPage(1);
-                              }}
-                              sx={{ marginLeft: "0.5em" }}
-                            >
-                              <Button color="error" variant="contained">
-                                <DeleteIcon />
-                              </Button>
-                            </Box>
+                            )}
                           </Box>
                         </Td>
                       </Tr>
