@@ -27,6 +27,7 @@ const GalleryPage = () => {
   const dispatch = useAppDispatch();
   const { images, loading } = useAppSelector((state) => state.gallery);
   const [page, setPage] = useState(1);
+  const levelOfAccess = localStorage.getItem("levelOfAccess");
 
   useEffect(() => {
     dispatch(getAllImagesAction(1));
@@ -54,9 +55,11 @@ const GalleryPage = () => {
         >
           Gallery
         </Typography>
-        <Button onClick={() => navigate("/uploadImage")} variant="contained">
-          <AddIcon /> Upload Image
-        </Button>
+        {levelOfAccess === "Administrator" && (
+          <Button onClick={() => navigate("/uploadImage")} variant="contained">
+            <AddIcon /> Upload Image
+          </Button>
+        )}
       </Box>
       <Box
         sx={{
@@ -87,8 +90,8 @@ const GalleryPage = () => {
                 sx={{
                   maxWidth: 345,
                   minWidth: 345,
-                  maxHeight: 550,
-                  minHeight: 550,
+                  maxHeight: levelOfAccess === "Administrator" ? 550 : 500,
+                  minHeight: levelOfAccess === "Administrator" ? 550 : 500,
                   margin: "1em",
                   border: "1px solid #D6E4E5",
                   padding: "1em",
@@ -119,29 +122,31 @@ const GalleryPage = () => {
                     ₱{item.price}
                   </Typography>
                 </CardContent>
-                <CardActions
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Link to={`/editImage/${item._id}`}>
-                    <Button size="small" variant="contained">
-                      <EditIcon />
-                    </Button>
-                  </Link>
-                  <Button
-                    onClick={() => {
-                      dispatch(deleteImageAction(item._id));
-                      setPage(1);
+                {levelOfAccess === "Administrator" && (
+                  <CardActions
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
                     }}
-                    size="small"
-                    variant="contained"
-                    color="error"
                   >
-                    <DeleteIcon />
-                  </Button>
-                </CardActions>
+                    <Link to={`/editImage/${item._id}`}>
+                      <Button size="small" variant="contained">
+                        <EditIcon />
+                      </Button>
+                    </Link>
+                    <Button
+                      onClick={() => {
+                        dispatch(deleteImageAction(item._id));
+                        setPage(1);
+                      }}
+                      size="small"
+                      variant="contained"
+                      color="error"
+                    >
+                      <DeleteIcon />
+                    </Button>
+                  </CardActions>
+                )}
               </Card>
             );
           })

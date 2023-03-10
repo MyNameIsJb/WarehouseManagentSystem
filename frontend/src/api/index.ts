@@ -36,6 +36,9 @@ const authDailyAttendance = axios.create({
 const authReturnedItem = axios.create({
   baseURL: "http://localhost:8080/returnedItem",
 });
+const authBarcodeGenerator = axios.create({
+  baseURL: "http://localhost:8080/barcodeGenerator",
+});
 
 authUserAPI.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
@@ -92,6 +95,12 @@ authDailyAttendance.interceptors.request.use((req) => {
   return req;
 });
 authReturnedItem.interceptors.request.use((req) => {
+  if (localStorage.getItem("token")) {
+    req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
+  }
+  return req;
+});
+authBarcodeGenerator.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
     req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
   }
@@ -192,3 +201,11 @@ export const getAllDailyAttendanceAPI = (page: number | any) =>
 // Returned Item Router
 export const getAllReturnedItemsAPI = (page: number | any) =>
   authReturnedItem.get("/getAllReturnedItems", { params: { page: page } });
+
+// Barcode Generator Router
+export const createBarcodeAPI = (data: object | any) =>
+  authBarcodeGenerator.post("/createBarcode", data);
+export const getAllBarcodesAPI = () =>
+  authBarcodeGenerator.get("/getAllBarcodes");
+export const deleteAllBarcodesAPI = () =>
+  authBarcodeGenerator.delete("/deleteAllBarcodes");
