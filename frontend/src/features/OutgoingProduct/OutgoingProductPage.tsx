@@ -137,14 +137,17 @@ const OutgoingProductPage = () => {
                                 </Button>
                               </Box>
                             </Link>
-                            <Box
-                              onClick={() => {
-                                dispatch(deleteOutgoingProductAction(item._id));
-                                setPage(1);
-                              }}
-                              sx={{ marginLeft: "0.5em" }}
-                            >
-                              <Button color="error" variant="contained">
+                            <Box sx={{ marginLeft: "0.5em" }}>
+                              <Button
+                                onClick={() => {
+                                  dispatch(
+                                    deleteOutgoingProductAction(item._id)
+                                  );
+                                  setPage(1);
+                                }}
+                                color="error"
+                                variant="contained"
+                              >
                                 <DeleteIcon />
                               </Button>
                             </Box>

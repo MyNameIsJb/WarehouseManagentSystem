@@ -145,6 +145,30 @@ export const deleteIncomingProductAction = createAsyncThunk<
   }
 });
 
+export const receivedIncomingProductAction = createAsyncThunk<
+  object,
+  string | undefined
+>("incomingProduct/receivedIncomingProductAction", async (id, thunkAPI) => {
+  try {
+    const response = await api.receivedIncomingProductAPI(id);
+    Swal.fire({
+      title: "Success!",
+      text: response.data.message,
+      icon: "success",
+      timer: 2000,
+    });
+    thunkAPI.dispatch(getAllIncomingProductsAction(1));
+  } catch (error: any) {
+    Swal.fire({
+      title: "Error!",
+      text: error.response.data.message,
+      icon: "error",
+      timer: 2000,
+    });
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
 export const incomingProductSlice = createSlice({
   name: "incomingProduct",
   initialState,
@@ -203,6 +227,19 @@ export const incomingProductSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(deleteIncomingProductAction.rejected, (state, action) => {
+      state.errors = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(receivedIncomingProductAction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(
+      receivedIncomingProductAction.fulfilled,
+      (state, action) => {
+        state.loading = false;
+      }
+    );
+    builder.addCase(receivedIncomingProductAction.rejected, (state, action) => {
       state.errors = action.payload;
       state.loading = false;
     });

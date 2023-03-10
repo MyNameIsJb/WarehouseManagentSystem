@@ -175,6 +175,8 @@ export const updateIncomingProductAPI = (data: object | any) =>
   authIncomingProductAPI.put(`/updateIncomingProduct/${data.id}`, data);
 export const deleteIncomingProductAPI = (id: string | undefined) =>
   authIncomingProductAPI.delete(`/deleteIncomingProduct/${id}`);
+export const receivedIncomingProductAPI = (id: string | undefined) =>
+  authIncomingProductAPI.post(`/receivedIncomingProduct/${id}`);
 
 // Outgoing Product Router
 export const getAllOutgoingProductsAPI = (page: number | any) =>

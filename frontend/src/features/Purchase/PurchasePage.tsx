@@ -4,6 +4,7 @@ import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { getAllPurchasesAction, itemsInterface } from "./purchaseSlice";
+import moment from "moment";
 
 const PurchasePage = () => {
   const dispatch = useAppDispatch();
@@ -56,7 +57,6 @@ const PurchasePage = () => {
                 <Th>Model</Th>
                 <Th>Quantity</Th>
                 <Th>Total Price</Th>
-                <Th>Name of Store</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -68,19 +68,21 @@ const PurchasePage = () => {
                   <Td>0 Result</Td>
                   <Td>0 Result</Td>
                   <Td>0 Result</Td>
-                  <Td>0 Result</Td>
                 </Tr>
               ) : (
                 purchases?.items.map((item: itemsInterface, index: number) => {
                   return (
                     <Tr key={index}>
-                      <Td>{item.dateOfTransaction}</Td>
+                      <Td>
+                        {moment(item.dateOfTransaction)
+                          .utc()
+                          .format("YYYY-MM-DD")}
+                      </Td>
                       <Td>{item.brandName}</Td>
                       <Td>{item.description}</Td>
                       <Td>{item.model}</Td>
                       <Td>{item.quantity}</Td>
                       <Td>{item.totalPrice}</Td>
-                      <Td>{item.nameOfStore}</Td>
                     </Tr>
                   );
                 })

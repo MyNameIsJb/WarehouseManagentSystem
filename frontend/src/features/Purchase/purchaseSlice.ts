@@ -10,7 +10,6 @@ export interface itemsInterface {
   model: string;
   quantity: number;
   totalPrice: string;
-  nameOfStore: string;
   createdAt: Date;
 }
 

@@ -7,7 +7,6 @@ export interface PurchaseInterface {
   model: string;
   quantity: number;
   totalPrice: string;
-  nameOfStore: string;
   createdAt: Date;
 }
 
@@ -18,7 +17,6 @@ const PurchaseSchema = new Schema<PurchaseInterface>({
   model: { type: String, required: true },
   quantity: { type: Number, required: true },
   totalPrice: { type: String, required: true },
-  nameOfStore: { type: String, required: true },
   createdAt: { type: Date, default: new Date() },
 });
 
