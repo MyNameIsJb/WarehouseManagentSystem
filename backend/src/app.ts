@@ -20,6 +20,7 @@ import outgoingProductRouter from "./routes/outgoingProductRoute";
 import orderProductRouter from "./routes/orderProductRoute";
 import dailyAttendanceRouter from "./routes/dailyAttendanceRoute";
 import returnedItemRouter from "./routes/returnedItemRoute";
+import barcodeGeneratorRouter from "./routes/barcodeGeneratorRoute";
 
 // Declare routes path
 app.use("/user", userRoute);
@@ -32,5 +33,6 @@ app.use("/outgoingProduct", outgoingProductRouter);
 app.use("/orderProduct", orderProductRouter);
 app.use("/dailyAttendance", dailyAttendanceRouter);
 app.use("/returnedItem", returnedItemRouter);
+app.use("/barcodeGenerator", barcodeGeneratorRouter);
 
 export { app };

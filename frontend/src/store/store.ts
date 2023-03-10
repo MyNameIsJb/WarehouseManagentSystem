@@ -24,6 +24,7 @@ import outgoingProductReducer from "../features/OutgoingProduct/outgoingProductS
 import orderProductReducer from "../features/StockReplenishment/stockReplenishmentSlice";
 import dailyAttendanceReducer from "../features/DailyAttendance/dailyAttendanceSlice";
 import returnedItemReducer from "../features/ReturnedItem/returnedItemSlice";
+import barcodeGeneratorReducer from "../features/BarcodeGenerator/barcodeGeneratorSlice";
 
 const persistConfig = {
   key: "root",
@@ -45,6 +46,7 @@ const reducer = combineReducers({
   orderProduct: orderProductReducer,
   dailyAttendance: dailyAttendanceReducer,
   returnedItem: returnedItemReducer,
+  barcodeGenerator: barcodeGeneratorReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

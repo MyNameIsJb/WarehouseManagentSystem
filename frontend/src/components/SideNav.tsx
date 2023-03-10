@@ -44,6 +44,7 @@ export const adminMenu = [
 export const empMenu = [
   { route: "gallery", link: "Gallery" },
   { route: "barcodeGenerator", link: "Barcode Generator" },
+  { route: "inventory", link: "Inventory" },
   { route: "incomingProduct", link: "Incoming Product" },
   { route: "outgoingProduct", link: "Outgoing Product" },
   { route: "stockReplenishment", link: "Stock Replenishment" },
@@ -134,6 +135,8 @@ const SideNav = () => {
                         <CollectionsIcon />
                       ) : text.link === "Barcode Generator" ? (
                         <HorizontalSplitIcon />
+                      ) : text.link === "Inventory" ? (
+                        <InventoryIcon />
                       ) : text.link === "Incoming Product" ? (
                         <AddBusinessIcon />
                       ) : text.link === "Outgoing Product" ? (
