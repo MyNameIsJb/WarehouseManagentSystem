@@ -30,14 +30,20 @@ const authOutgoingProductAPI = axios.create({
 const authOrderProductAPI = axios.create({
   baseURL: "http://localhost:8080/orderProduct",
 });
-const authDailyAttendance = axios.create({
+const authDailyAttendanceAPI = axios.create({
   baseURL: "http://localhost:8080/dailyAttendance",
 });
-const authReturnedItem = axios.create({
+const authReturnedItemAPI = axios.create({
   baseURL: "http://localhost:8080/returnedItem",
 });
-const authBarcodeGenerator = axios.create({
+const authBarcodeGeneratorAPI = axios.create({
   baseURL: "http://localhost:8080/barcodeGenerator",
+});
+const authStoreInventoryAPI = axios.create({
+  baseURL: "http://localhost:8080/storeInventory",
+});
+const authStoreIncomingProductAPI = axios.create({
+  baseURL: "http://localhost:8080/storeIncomingProduct",
 });
 
 authUserAPI.interceptors.request.use((req) => {
@@ -46,61 +52,85 @@ authUserAPI.interceptors.request.use((req) => {
   }
   return req;
 });
+
 authProductAPI.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
     req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
   }
   return req;
 });
+
 authGalleryAPI.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
     req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
   }
   return req;
 });
+
 authSaleAPI.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
     req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
   }
   return req;
 });
+
 authPurchaseAPI.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
     req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
   }
   return req;
 });
+
 authIncomingProductAPI.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
     req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
   }
   return req;
 });
+
 authOutgoingProductAPI.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
     req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
   }
   return req;
 });
+
 authOrderProductAPI.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
     req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
   }
   return req;
 });
-authDailyAttendance.interceptors.request.use((req) => {
+
+authDailyAttendanceAPI.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
     req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
   }
   return req;
 });
-authReturnedItem.interceptors.request.use((req) => {
+
+authReturnedItemAPI.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
     req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
   }
   return req;
 });
-authBarcodeGenerator.interceptors.request.use((req) => {
+
+authBarcodeGeneratorAPI.interceptors.request.use((req) => {
+  if (localStorage.getItem("token")) {
+    req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
+  }
+  return req;
+});
+
+authStoreInventoryAPI.interceptors.request.use((req) => {
+  if (localStorage.getItem("token")) {
+    req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
+  }
+  return req;
+});
+
+authStoreIncomingProductAPI.interceptors.request.use((req) => {
   if (localStorage.getItem("token")) {
     req.headers!.Authorization = `Bearer ${localStorage.getItem("token")}`;
   }
@@ -200,16 +230,32 @@ export const getAllOrderProductsAPI = (page: number | any) =>
 
 // Daily Attendance Router
 export const getAllDailyAttendanceAPI = (page: number | any) =>
-  authDailyAttendance.get("/getAllDailyAttendance", { params: { page: page } });
+  authDailyAttendanceAPI.get("/getAllDailyAttendance", {
+    params: { page: page },
+  });
 
 // Returned Item Router
 export const getAllReturnedItemsAPI = (page: number | any) =>
-  authReturnedItem.get("/getAllReturnedItems", { params: { page: page } });
+  authReturnedItemAPI.get("/getAllReturnedItems", { params: { page: page } });
 
 // Barcode Generator Router
 export const createBarcodeAPI = (data: object | any) =>
-  authBarcodeGenerator.post("/createBarcode", data);
+  authBarcodeGeneratorAPI.post("/createBarcode", data);
 export const getAllBarcodesAPI = () =>
-  authBarcodeGenerator.get("/getAllBarcodes");
+  authBarcodeGeneratorAPI.get("/getAllBarcodes");
 export const deleteAllBarcodesAPI = () =>
-  authBarcodeGenerator.delete("/deleteAllBarcodes");
+  authBarcodeGeneratorAPI.delete("/deleteAllBarcodes");
+
+// Store Inventory Route
+export const getAllStoreInventoryAPI = (page: number | any) =>
+  authStoreInventoryAPI.get("/getAllStoreInventory", {
+    params: { page: page },
+  });
+
+// Store Incoming Product Route
+export const getAllStoreIncomingProductAPI = (page: number | any) =>
+  authStoreIncomingProductAPI.get("/getAllStoreIncomingProduct", {
+    params: { page: page },
+  });
+export const receivedStoreIncomingProductAPI = (id: string | undefined) =>
+  authStoreIncomingProductAPI.post(`/receivedStoreIncomingProduct/${id}`);

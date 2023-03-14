@@ -29,6 +29,9 @@ import DailyAttendancePage from "./features/DailyAttendance/DailyAttendancePage"
 import ReturnedItemPage from "./features/ReturnedItem/ReturnedItemPage";
 import BarcodeGeneratorPage from "./features/BarcodeGenerator/BarcodeGeneratorPage";
 import EmployeeMenu from "./components/EmployeeMenu";
+import ClientMenu from "./components/ClientMenu";
+import StoreInventoryPage from "./features/StoreInventory/StoreInventoryPage";
+import StoreIncomingProductPage from "./features/StoreIncomingProduct/StoreIncomingProductPage";
 
 function App() {
   return (
@@ -102,6 +105,13 @@ function App() {
               element={<StockReplenishmentPage />}
             />
             <Route path="/viewReturnedItems" element={<ReturnedItemPage />} />
+          </Route>
+          <Route element={<ClientMenu />}>
+            <Route path="/storeInventory" element={<StoreInventoryPage />} />
+            <Route
+              path="/storeIncomingProduct"
+              element={<StoreIncomingProductPage />}
+            />
           </Route>
           <Route path="/viewGallery" element={<GalleryPage />} />
         </Route>

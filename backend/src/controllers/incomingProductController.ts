@@ -173,7 +173,7 @@ export const receivedIncomingProductController = async (
         totalPrice: existingIncomingProduct!.totalPrice,
       });
       await DailyAttendance.create({
-        name: existingUser?.name,
+        name: existingUser!.name,
         activity: "Received product",
         productId: existingProduct.productId,
         brandName: existingIncomingProduct!.brandName,

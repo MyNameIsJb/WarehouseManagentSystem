@@ -55,9 +55,9 @@ export const clientMenu = [
   { route: "viewGallery", link: "Gallery" },
   { route: "storeInventory", link: "Inventory" },
   { route: "storeIncomingProduct", link: "Incoming Product" },
-  { route: "sales", link: "Sales" },
-  { route: "orderItem", link: "Order Item" },
-  { route: "returnedItem", link: "Returned Item" },
+  { route: "storeSales", link: "Sales" },
+  { route: "storeOrderItem", link: "Order Item" },
+  { route: "storeReturnedItem", link: "Returned Item" },
 ];
 
 const SideNav = () => {
