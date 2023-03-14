@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   createOutgoingProductController,
   deleteOutgoingProductController,
+  deliverOutgoingProductController,
   getAllOutgoingProductsController,
   getOutgoingProductByIdController,
   updateOutgoingProductController,
@@ -34,6 +35,11 @@ router.delete(
   "/deleteOutgoingProduct/:id",
   middleware,
   deleteOutgoingProductController
+);
+router.post(
+  "/deliverOutgoingProduct/:id",
+  middleware,
+  deliverOutgoingProductController
 );
 
 export default router;

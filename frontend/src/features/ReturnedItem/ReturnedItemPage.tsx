@@ -85,7 +85,7 @@ const ReturnedItemPage = () => {
                       <Td>{item.reason}</Td>
                       <Td>{item.store}</Td>
                       <Td>
-                        {moment(item.returnedDate).utc().format("YYYY-MM-DD")}
+                        {moment(item.returnedDate).utc().format("MMMM D, Y")}
                       </Td>
                     </Tr>
                   );

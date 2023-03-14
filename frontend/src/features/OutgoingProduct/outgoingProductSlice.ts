@@ -4,12 +4,11 @@ import * as api from "../../api";
 
 export interface itemsInterface {
   _id: string;
-  trackingId: string;
   brandName: string;
   description: string;
   model: string;
   quantity: number;
-  totalPrice: string;
+  pricePerUnit: string;
   dateOfTransaction: Date;
   store: string | void;
   productId: string;
@@ -147,6 +146,30 @@ export const deleteOutgoingProductAction = createAsyncThunk<
   }
 });
 
+export const deliverOutgoingProductAction = createAsyncThunk<
+  object,
+  string | undefined
+>("outgoingProduct/deliverOutgoingProductAction", async (id, thunkAPI) => {
+  try {
+    const response = await api.deliverOutgoingProductAPI(id);
+    Swal.fire({
+      title: "Success!",
+      text: response.data.message,
+      icon: "success",
+      timer: 2000,
+    });
+    thunkAPI.dispatch(getAllOutgoingProductsAction(1));
+  } catch (error: any) {
+    Swal.fire({
+      title: "Error!",
+      text: error.response.data.message,
+      icon: "error",
+      timer: 2000,
+    });
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
 export const outgoingProductSlice = createSlice({
   name: "outgoingProduct",
   initialState,
@@ -205,6 +228,16 @@ export const outgoingProductSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(deleteOutgoingProductAction.rejected, (state, action) => {
+      state.errors = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(deliverOutgoingProductAction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(deliverOutgoingProductAction.fulfilled, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(deliverOutgoingProductAction.rejected, (state, action) => {
       state.errors = action.payload;
       state.loading = false;
     });

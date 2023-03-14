@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
-import crypto from "crypto";
 import OutgoingProduct from "../models/OutgoingProduct";
 import Product from "../models/Product";
 import mongoose from "mongoose";
 import User from "../models/User";
+import StoreIncomingProduct from "../models/StoreIncomingProduct";
+import DailyAttendance from "../models/DailyAttendance";
 
 export const getAllOutgoingProductsController = async (
   req: Request,
@@ -51,21 +52,20 @@ export const createOutgoingProductController = async (
     if (!existingStore || store === "N/A")
       return res.status(400).json({ message: "Store doesn't exist" });
 
-    const totalPrice =
-      parseFloat(existingProduct.pricePerUnit.replace(/[₱,]+/g, "")) * quantity;
-    const formattedPrice = totalPrice.toLocaleString("en-US", {
-      style: "currency",
-      currency: "PHP",
-    });
+    // const totalPrice =
+    //   parseFloat(existingProduct.pricePerUnit.replace(/[₱,]+/g, "")) * quantity;
+    // const formattedPrice = totalPrice.toLocaleString("en-US", {
+    //   style: "currency",
+    //   currency: "PHP",
+    // });
 
     await OutgoingProduct.create({
-      trackingId: crypto.randomBytes(8).toString("hex"),
       productId,
       brandName: existingProduct.brandName,
       description: existingProduct.description,
       model: existingProduct.model,
       quantity,
-      totalPrice: formattedPrice,
+      pricePerUnit: existingProduct.pricePerUnit,
       dateOfTransaction: new Date(),
       store,
     });
@@ -114,13 +114,6 @@ export const updateOutgoingProductController = async (
     if (!existingStore || store === "N/A")
       return res.status(400).json({ message: "Store doesn't exist" });
 
-    const totalPrice =
-      parseFloat(existingProduct.pricePerUnit.replace(/[₱,]+/g, "")) * quantity;
-    const formattedPrice = totalPrice.toLocaleString("en-US", {
-      style: "currency",
-      currency: "PHP",
-    });
-
     const existingId = await OutgoingProduct.findById({ _id: id });
     await OutgoingProduct.findByIdAndUpdate(
       existingId,
@@ -130,7 +123,7 @@ export const updateOutgoingProductController = async (
         description: existingProduct.description,
         model: existingProduct.model,
         quantity,
-        totalPrice: formattedPrice,
+        pricePerUnit: existingProduct.pricePerUnit,
         store,
       },
       { new: true }
@@ -153,6 +146,57 @@ export const deleteOutgoingProductController = async (
 
     await OutgoingProduct.findByIdAndDelete(id);
     return res.status(203).json({ message: "Deleted product successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+export const deliverOutgoingProductController = async (
+  req: Request,
+  res: Response
+) => {
+  const { id } = req.params;
+  const { decoded } = req.body;
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id))
+      return res.status(404).json({ message: "Invalid ID" });
+
+    const existingOutgoingProduct = await OutgoingProduct.findById({ _id: id });
+    const existingProduct = await Product.findOne({
+      productId: existingOutgoingProduct?.productId,
+    });
+    const existingUser = await User.findOne({ _id: decoded.id });
+
+    await StoreIncomingProduct.create({
+      productId: existingOutgoingProduct!.productId,
+      brandName: existingOutgoingProduct!.brandName,
+      description: existingOutgoingProduct!.description,
+      model: existingOutgoingProduct!.model,
+      quantity: existingOutgoingProduct!.quantity,
+      pricePerUnit: existingOutgoingProduct!.pricePerUnit,
+      dateOfDelivery: new Date(),
+      store: existingOutgoingProduct!.store,
+    });
+    await Product.findByIdAndUpdate(
+      existingProduct!._id,
+      {
+        quantity: existingProduct!.quantity - existingOutgoingProduct!.quantity,
+      },
+      { new: true }
+    );
+    await DailyAttendance.create({
+      name: existingUser?.name,
+      activity: "Delivered product",
+      productId: existingOutgoingProduct!.productId,
+      brandName: existingOutgoingProduct!.brandName,
+      description: existingOutgoingProduct!.description,
+      model: existingOutgoingProduct!.model,
+      quantity: existingOutgoingProduct!.quantity,
+      dateOfActivity: new Date(),
+    });
+    await OutgoingProduct.findByIdAndDelete(id);
+    return res.status(200).json({ message: "Successfully delivered product" });
   } catch (error) {
     return res.status(500).json({ message: "Something went wrong" });
   }

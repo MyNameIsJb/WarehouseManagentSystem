@@ -28,6 +28,7 @@ import StockReplenishmentPage from "./features/StockReplenishment/StockReplenish
 import DailyAttendancePage from "./features/DailyAttendance/DailyAttendancePage";
 import ReturnedItemPage from "./features/ReturnedItem/ReturnedItemPage";
 import BarcodeGeneratorPage from "./features/BarcodeGenerator/BarcodeGeneratorPage";
+import EmployeeMenu from "./components/EmployeeMenu";
 
 function App() {
   return (
@@ -51,10 +52,13 @@ function App() {
             <Route path="/productList" element={<ProductListPage />} />
             <Route path="/createProduct" element={<CreateProductPage />} />
             <Route path="editProduct/:id" element={<EditProductPage />} />
+            <Route path="/gallery" element={<GalleryPage />} />
             <Route path="/uploadImage" element={<UploadImagePage />} />
             <Route path="/editImage/:id" element={<EditImagePage />} />
+            <Route path="/inventory" element={<InventoryPage />} />
             <Route path="/sale" element={<SalePage />} />
             <Route path="/purchase" element={<PurchasePage />} />
+            <Route path="/incomingProduct" element={<IncomingProductPage />} />
             <Route
               path="/createIncomingProduct"
               element={<CreateIncomingProductPage />}
@@ -63,6 +67,7 @@ function App() {
               path="/editIncomingProduct/:id"
               element={<EditIncomingProductPage />}
             />
+            <Route path="/outgoingProduct" element={<OutgoingProductPage />} />
             <Route
               path="/createOutgoingProduct"
               element={<CreateOutgoingProductPage />}
@@ -71,18 +76,34 @@ function App() {
               path="/editOutgoingProduct/:id"
               element={<EditOutgoingProductPage />}
             />
+            <Route
+              path="/stockReplenishment"
+              element={<StockReplenishmentPage />}
+            />
             <Route path="/dailyAttendance" element={<DailyAttendancePage />} />
             <Route path="/returnedItems" element={<ReturnedItemPage />} />
           </Route>
-          <Route path="/inventory" element={<InventoryPage />} />
-          <Route path="/gallery" element={<GalleryPage />} />
-          <Route path="/incomingProduct" element={<IncomingProductPage />} />
-          <Route path="/outgoingProduct" element={<OutgoingProductPage />} />
-          <Route path="/barcodeGenerator" element={<BarcodeGeneratorPage />} />
-          <Route
-            path="/stockReplenishment"
-            element={<StockReplenishmentPage />}
-          />
+          <Route element={<EmployeeMenu />}>
+            <Route
+              path="/barcodeGenerator"
+              element={<BarcodeGeneratorPage />}
+            />
+            <Route path="/viewInventory" element={<InventoryPage />} />
+            <Route
+              path="/viewIncomingProduct"
+              element={<IncomingProductPage />}
+            />
+            <Route
+              path="/viewOutgoingProduct"
+              element={<OutgoingProductPage />}
+            />
+            <Route
+              path="/viewStockReplenishment"
+              element={<StockReplenishmentPage />}
+            />
+            <Route path="/viewReturnedItems" element={<ReturnedItemPage />} />
+          </Route>
+          <Route path="/viewGallery" element={<GalleryPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

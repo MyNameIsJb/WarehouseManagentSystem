@@ -10,7 +10,7 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import CheckIcon from "@mui/icons-material/Check";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import { useAppDispatch, useAppSelector } from "../../store/store";
@@ -81,7 +81,6 @@ const IncomingProductPage = () => {
           <Table className="global-table-css">
             <Thead>
               <Tr>
-                <Th>Tracking ID</Th>
                 <Th>Brand Name</Th>
                 <Th>Description</Th>
                 <Th>Model</Th>
@@ -101,14 +100,12 @@ const IncomingProductPage = () => {
                   <Td>0 Result</Td>
                   <Td>0 Result</Td>
                   <Td>0 Result</Td>
-                  <Td>0 Result</Td>
                 </Tr>
               ) : (
                 incomingProducts?.items.map(
                   (item: itemsInterface, index: number) => {
                     return (
                       <Tr key={index}>
-                        <Td>{item.trackingId}</Td>
                         <Td>{item.brandName}</Td>
                         <Td>{item.description}</Td>
                         <Td>{item.model}</Td>
@@ -117,7 +114,7 @@ const IncomingProductPage = () => {
                         <Td>
                           {moment(item.dateOfTransaction)
                             .utc()
-                            .format("YYYY-MM-DD")}
+                            .format("MMMM D, Y")}
                         </Td>
                         <Td>
                           <Box
@@ -161,7 +158,7 @@ const IncomingProductPage = () => {
                                 sx={{ marginLeft: "0.5em" }}
                               >
                                 <Button color="primary" variant="contained">
-                                  <CheckIcon />
+                                  <AddShoppingCartIcon />
                                 </Button>
                               </Box>
                             )}

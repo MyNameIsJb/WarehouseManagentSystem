@@ -90,7 +90,7 @@ const DailyAttendancePage = () => {
                       <Td>{item.model}</Td>
                       <Td>{item.quantity}</Td>
                       <Td>
-                        {moment(item.dateOfActivity).utc().format("YYYY-MM-DD")}
+                        {moment(item.dateOfActivity).utc().format("MMMM D, Y")}
                       </Td>
                     </Tr>
                   );

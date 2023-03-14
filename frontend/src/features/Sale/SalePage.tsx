@@ -4,6 +4,7 @@ import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { getAllSalesAction, itemsInterface } from "./saleSlice";
+import moment from "moment";
 
 const SalePage = () => {
   const dispatch = useAppDispatch();
@@ -74,7 +75,11 @@ const SalePage = () => {
                 sales?.items.map((item: itemsInterface, index: number) => {
                   return (
                     <Tr key={index}>
-                      <Td>{item.dateOfTransaction}</Td>
+                      <Td>
+                        {moment(item.dateOfTransaction)
+                          .utc()
+                          .format("MMMM D, Y")}
+                      </Td>
                       <Td>{item.brandName}</Td>
                       <Td>{item.description}</Td>
                       <Td>{item.model}</Td>

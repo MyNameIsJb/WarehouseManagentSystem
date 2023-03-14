@@ -76,7 +76,7 @@ const PurchasePage = () => {
                       <Td>
                         {moment(item.dateOfTransaction)
                           .utc()
-                          .format("YYYY-MM-DD")}
+                          .format("MMMM D, Y")}
                       </Td>
                       <Td>{item.brandName}</Td>
                       <Td>{item.description}</Td>

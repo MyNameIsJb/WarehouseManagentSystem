@@ -10,12 +10,14 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import moment from "moment";
 import {
   deleteOutgoingProductAction,
+  deliverOutgoingProductAction,
   getAllOutgoingProductsAction,
   itemsInterface,
 } from "./outgoingProductSlice";
@@ -28,6 +30,7 @@ const OutgoingProductPage = () => {
     (state) => state.outgoingProduct
   );
   const [page, setPage] = useState(1);
+  const levelOfAccess = localStorage.getItem("levelOfAccess");
 
   useEffect(() => {
     dispatch(getAllOutgoingProductsAction(1));
@@ -56,12 +59,14 @@ const OutgoingProductPage = () => {
         >
           Outgoing Product
         </Typography>
-        <Button
-          onClick={() => navigate("/createOutgoingProduct")}
-          variant="contained"
-        >
-          <AddIcon /> Add Product
-        </Button>
+        {levelOfAccess === "Administrator" && (
+          <Button
+            onClick={() => navigate("/createOutgoingProduct")}
+            variant="contained"
+          >
+            <AddIcon /> Add Product
+          </Button>
+        )}
       </Box>
       <Box
         style={{
@@ -78,13 +83,12 @@ const OutgoingProductPage = () => {
           <Table className="global-table-css">
             <Thead>
               <Tr>
-                <Th>Tracking ID</Th>
                 <Th>Product ID</Th>
                 <Th>Brand Name</Th>
                 <Th>Description</Th>
                 <Th>Model</Th>
                 <Th>Quantity</Th>
-                <Th>Total Price</Th>
+                <Th>Price Per Unit</Th>
                 <Th>Date</Th>
                 <Th>Store</Th>
                 <Th>Action</Th>
@@ -102,24 +106,22 @@ const OutgoingProductPage = () => {
                   <Td>0 Result</Td>
                   <Td>0 Result</Td>
                   <Td>0 Result</Td>
-                  <Td>0 Result</Td>
                 </Tr>
               ) : (
                 outgoingProducts?.items.map(
                   (item: itemsInterface, index: number) => {
                     return (
                       <Tr key={index}>
-                        <Td>{item.trackingId}</Td>
                         <Td>{item.productId}</Td>
                         <Td>{item.brandName}</Td>
                         <Td>{item.description}</Td>
                         <Td>{item.model}</Td>
                         <Td>{item.quantity}</Td>
-                        <Td>{item.totalPrice}</Td>
+                        <Td>{item.pricePerUnit}</Td>
                         <Td>
                           {moment(item.dateOfTransaction)
                             .utc()
-                            .format("YYYY-MM-DD")}
+                            .format("MMMM D, Y")}
                         </Td>
                         <Td>{item.store}</Td>
                         <Td>
@@ -130,27 +132,45 @@ const OutgoingProductPage = () => {
                               alignItems: "center",
                             }}
                           >
-                            <Link to={`/editOutgoingProduct/${item._id}`}>
-                              <Box sx={{ marginRight: "0.5em" }}>
-                                <Button color="success" variant="contained">
-                                  <EditIcon />
-                                </Button>
-                              </Box>
-                            </Link>
-                            <Box sx={{ marginLeft: "0.5em" }}>
-                              <Button
+                            {levelOfAccess === "Administrator" ? (
+                              <>
+                                <Link to={`/editOutgoingProduct/${item._id}`}>
+                                  <Box sx={{ marginRight: "0.5em" }}>
+                                    <Button color="success" variant="contained">
+                                      <EditIcon />
+                                    </Button>
+                                  </Box>
+                                </Link>
+                                <Box sx={{ marginLeft: "0.5em" }}>
+                                  <Button
+                                    onClick={() => {
+                                      dispatch(
+                                        deleteOutgoingProductAction(item._id)
+                                      );
+                                      setPage(1);
+                                    }}
+                                    color="error"
+                                    variant="contained"
+                                  >
+                                    <DeleteIcon />
+                                  </Button>
+                                </Box>
+                              </>
+                            ) : (
+                              <Box
                                 onClick={() => {
                                   dispatch(
-                                    deleteOutgoingProductAction(item._id)
+                                    deliverOutgoingProductAction(item._id)
                                   );
                                   setPage(1);
                                 }}
-                                color="error"
-                                variant="contained"
+                                sx={{ marginLeft: "0.5em" }}
                               >
-                                <DeleteIcon />
-                              </Button>
-                            </Box>
+                                <Button color="primary" variant="contained">
+                                  <ShoppingCartCheckoutIcon />
+                                </Button>
+                              </Box>
+                            )}
                           </Box>
                         </Td>
                       </Tr>

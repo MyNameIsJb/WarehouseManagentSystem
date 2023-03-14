@@ -42,18 +42,19 @@ export const adminMenu = [
 ];
 
 export const empMenu = [
-  { route: "gallery", link: "Gallery" },
+  { route: "viewGallery", link: "Gallery" },
   { route: "barcodeGenerator", link: "Barcode Generator" },
-  { route: "inventory", link: "Inventory" },
-  { route: "incomingProduct", link: "Incoming Product" },
-  { route: "outgoingProduct", link: "Outgoing Product" },
-  { route: "stockReplenishment", link: "Stock Replenishment" },
+  { route: "viewInventory", link: "Inventory" },
+  { route: "viewIncomingProduct", link: "Incoming Product" },
+  { route: "viewOutgoingProduct", link: "Outgoing Product" },
+  { route: "viewStockReplenishment", link: "Stock Replenishment" },
+  { route: "viewReturnedItems", link: "Returned Items" },
 ];
 
 export const clientMenu = [
-  { route: "gallery", link: "Gallery" },
-  { route: "inventory", link: "Inventory" },
-  { route: "incomingProduct", link: "Incoming Product" },
+  { route: "viewGallery", link: "Gallery" },
+  { route: "storeInventory", link: "Inventory" },
+  { route: "storeIncomingProduct", link: "Incoming Product" },
   { route: "sales", link: "Sales" },
   { route: "orderItem", link: "Order Item" },
   { route: "returnedItem", link: "Returned Item" },
@@ -143,6 +144,8 @@ const SideNav = () => {
                         <LocalShippingIcon />
                       ) : text.link === "Stock Replenishment" ? (
                         <RestoreIcon />
+                      ) : text.link === "Returned Items" ? (
+                        <ProductionQuantityLimitsIcon />
                       ) : (
                         ""
                       )}
