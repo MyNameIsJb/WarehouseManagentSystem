@@ -85,7 +85,7 @@ const StockReplenishmentPage = () => {
                       <Td>{item.quantity}</Td>
                       <Td>{item.store}</Td>
                       <Td>
-                        {moment(item.orderedDate).utc().format("YYYY-MM-DD")}
+                        {moment(item.orderedDate).utc().format("MMMM D, Y")}
                       </Td>
                     </Tr>
                   );

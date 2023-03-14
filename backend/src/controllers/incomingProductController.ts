@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import crypto from "crypto";
 import IncomingProduct from "../models/IncomingProduct";
 import mongoose from "mongoose";
 import Product from "../models/Product";
@@ -43,7 +42,6 @@ export const createIncomingProductController = async (
   const { brandName, description, model, quantity, totalPrice } = req.body;
   try {
     await IncomingProduct.create({
-      trackingId: crypto.randomBytes(8).toString("hex"),
       brandName,
       description,
       model,
@@ -140,56 +138,52 @@ export const receivedIncomingProductController = async (
     if (!existingProduct) {
       await Purchase.create({
         dateOfTransaction: new Date(),
-        brandName: existingIncomingProduct?.brandName,
-        description: existingIncomingProduct?.description,
-        model: existingIncomingProduct?.model,
-        quantity: existingIncomingProduct?.quantity,
-        totalPrice: existingIncomingProduct?.totalPrice,
+        brandName: existingIncomingProduct!.brandName,
+        description: existingIncomingProduct!.description,
+        model: existingIncomingProduct!.model,
+        quantity: existingIncomingProduct!.quantity,
+        totalPrice: existingIncomingProduct!.totalPrice,
       });
       await DailyAttendance.create({
-        name: existingUser?.name,
+        name: existingUser!.name,
         activity: "Received product",
-        brandName: existingIncomingProduct?.brandName,
-        description: existingIncomingProduct?.description,
-        model: existingIncomingProduct?.model,
-        quantity: existingIncomingProduct?.quantity,
+        brandName: existingIncomingProduct!.brandName,
+        description: existingIncomingProduct!.description,
+        model: existingIncomingProduct!.model,
+        quantity: existingIncomingProduct!.quantity,
         dateOfActivity: new Date(),
       });
       await IncomingProduct.findByIdAndDelete(id);
-      return res
-        .status(200)
-        .json({ message: "Successfully received unregistered product" });
+      return res.status(200).json({ message: "Successfully received product" });
     } else {
       await Product.findByIdAndUpdate(
-        existingProduct._id,
+        existingProduct!._id,
         {
           quantity:
-            existingProduct.quantity + existingIncomingProduct!.quantity,
+            existingProduct!.quantity + existingIncomingProduct!.quantity,
         },
         { new: true }
       );
       await Purchase.create({
         dateOfTransaction: new Date(),
-        brandName: existingIncomingProduct?.brandName,
-        description: existingIncomingProduct?.description,
-        model: existingIncomingProduct?.model,
-        quantity: existingIncomingProduct?.quantity,
-        totalPrice: existingIncomingProduct?.totalPrice,
+        brandName: existingIncomingProduct!.brandName,
+        description: existingIncomingProduct!.description,
+        model: existingIncomingProduct!.model,
+        quantity: existingIncomingProduct!.quantity,
+        totalPrice: existingIncomingProduct!.totalPrice,
       });
       await DailyAttendance.create({
         name: existingUser?.name,
         activity: "Received product",
         productId: existingProduct.productId,
-        brandName: existingIncomingProduct?.brandName,
-        description: existingIncomingProduct?.description,
-        model: existingIncomingProduct?.model,
-        quantity: existingIncomingProduct?.quantity,
+        brandName: existingIncomingProduct!.brandName,
+        description: existingIncomingProduct!.description,
+        model: existingIncomingProduct!.model,
+        quantity: existingIncomingProduct!.quantity,
         dateOfActivity: new Date(),
       });
       await IncomingProduct.findByIdAndDelete(id);
-      return res
-        .status(200)
-        .json({ message: "Successfully received unregistered product" });
+      return res.status(200).json({ message: "Successfully received product" });
     }
   } catch (error) {
     return res.status(500).json({ message: "Something went wrong" });

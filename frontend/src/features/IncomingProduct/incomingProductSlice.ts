@@ -4,7 +4,6 @@ import * as api from "../../api";
 
 export interface itemsInterface {
   _id: string;
-  trackingId: string;
   brandName: string;
   description: string;
   model: string;

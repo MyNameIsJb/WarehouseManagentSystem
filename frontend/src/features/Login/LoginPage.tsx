@@ -59,9 +59,10 @@ const LoginPage = () => {
         if (result.levelOfAccess === "Administrator")
           return navigate("/employeeList");
 
-        if (result.levelOfAccess === "Employee") return navigate("/gallery");
+        if (result.levelOfAccess === "Employee")
+          return navigate("/viewGallery");
 
-        if (result.levelOfAccess === "Client") return navigate("/gallery");
+        if (result.levelOfAccess === "Client") return navigate("/viewGallery");
         reset();
       });
     reset({
@@ -72,8 +73,8 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (levelOfAccess === "Administrator") return navigate("/employeeList");
-    if (levelOfAccess === "Employee") return navigate("/gallery");
-    if (levelOfAccess === "Client") return navigate("/gallery");
+    if (levelOfAccess === "Employee") return navigate("/viewGallery");
+    if (levelOfAccess === "Client") return navigate("/viewGallery");
   }, [levelOfAccess, navigate]);
 
   return (

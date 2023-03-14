@@ -191,6 +191,8 @@ export const updateOutgoingProductAPI = (data: object | any) =>
   authOutgoingProductAPI.put(`/updateOutgoingProduct/${data.id}`, data);
 export const deleteOutgoingProductAPI = (id: string | undefined) =>
   authOutgoingProductAPI.delete(`/deleteOutgoingProduct/${id}`);
+export const deliverOutgoingProductAPI = (id: string | undefined) =>
+  authOutgoingProductAPI.post(`/deliverOutgoingProduct/${id}`);
 
 // Order Product Router
 export const getAllOrderProductsAPI = (page: number | any) =>

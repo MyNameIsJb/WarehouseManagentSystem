@@ -1,7 +1,6 @@
 import { model, Schema } from "mongoose";
 
 export interface IncomingProductInterface {
-  trackingId: string;
   brandName: string;
   description: string;
   model: string;
@@ -12,7 +11,6 @@ export interface IncomingProductInterface {
 }
 
 const IncomingProductSchema = new Schema<IncomingProductInterface>({
-  trackingId: { type: String, required: true },
   brandName: { type: String, required: true },
   description: { type: String, required: true },
   model: { type: String, required: true },
