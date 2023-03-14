@@ -157,16 +157,17 @@ const OutgoingProductPage = () => {
                                 </Box>
                               </>
                             ) : (
-                              <Box
-                                onClick={() => {
-                                  dispatch(
-                                    deliverOutgoingProductAction(item._id)
-                                  );
-                                  setPage(1);
-                                }}
-                                sx={{ marginLeft: "0.5em" }}
-                              >
-                                <Button color="primary" variant="contained">
+                              <Box sx={{ marginLeft: "0.5em" }}>
+                                <Button
+                                  onClick={() => {
+                                    dispatch(
+                                      deliverOutgoingProductAction(item._id)
+                                    );
+                                    setPage(1);
+                                  }}
+                                  color="primary"
+                                  variant="contained"
+                                >
                                   <ShoppingCartCheckoutIcon />
                                 </Button>
                               </Box>

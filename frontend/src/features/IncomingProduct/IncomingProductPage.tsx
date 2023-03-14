@@ -133,31 +133,33 @@ const IncomingProductPage = () => {
                                     </Button>
                                   </Box>
                                 </Link>
-                                <Box
-                                  onClick={() => {
-                                    dispatch(
-                                      deleteIncomingProductAction(item._id)
-                                    );
-                                    setPage(1);
-                                  }}
-                                  sx={{ marginLeft: "0.5em" }}
-                                >
-                                  <Button color="error" variant="contained">
+                                <Box sx={{ marginLeft: "0.5em" }}>
+                                  <Button
+                                    onClick={() => {
+                                      dispatch(
+                                        deleteIncomingProductAction(item._id)
+                                      );
+                                      setPage(1);
+                                    }}
+                                    color="error"
+                                    variant="contained"
+                                  >
                                     <DeleteIcon />
                                   </Button>
                                 </Box>
                               </>
                             ) : (
-                              <Box
-                                onClick={() => {
-                                  dispatch(
-                                    receivedIncomingProductAction(item._id)
-                                  );
-                                  setPage(1);
-                                }}
-                                sx={{ marginLeft: "0.5em" }}
-                              >
-                                <Button color="primary" variant="contained">
+                              <Box sx={{ marginLeft: "0.5em" }}>
+                                <Button
+                                  onClick={() => {
+                                    dispatch(
+                                      receivedIncomingProductAction(item._id)
+                                    );
+                                    setPage(1);
+                                  }}
+                                  color="primary"
+                                  variant="contained"
+                                >
                                   <AddShoppingCartIcon />
                                 </Button>
                               </Box>
