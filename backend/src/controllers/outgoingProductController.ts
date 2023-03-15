@@ -52,13 +52,6 @@ export const createOutgoingProductController = async (
     if (!existingStore || store === "N/A")
       return res.status(400).json({ message: "Store doesn't exist" });
 
-    // const totalPrice =
-    //   parseFloat(existingProduct.pricePerUnit.replace(/[₱,]+/g, "")) * quantity;
-    // const formattedPrice = totalPrice.toLocaleString("en-US", {
-    //   style: "currency",
-    //   currency: "PHP",
-    // });
-
     await OutgoingProduct.create({
       productId,
       brandName: existingProduct.brandName,

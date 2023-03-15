@@ -187,6 +187,8 @@ export const deleteImageAPI = (id: string | undefined) =>
 // Sale Router
 export const getAllSalesAPI = (page: number | any) =>
   authSaleAPI.get("/getAllSales", { params: { page: page } });
+export const createSaleAPI = (data: object | any) =>
+  authSaleAPI.post("/createSale", data);
 
 // Purchase Router
 export const getAllPurchasesAPI = (page: number | any) =>
@@ -251,6 +253,10 @@ export const getAllStoreInventoryAPI = (page: number | any) =>
   authStoreInventoryAPI.get("/getAllStoreInventory", {
     params: { page: page },
   });
+export const getStoreProductAPI = (id: string | undefined) =>
+  authStoreInventoryAPI.get(`/getStoreProduct/${id}`);
+export const updateStorePriceAPI = (data: object | any) =>
+  authStoreInventoryAPI.put(`/updateStorePrice/${data.id}`, data);
 
 // Store Incoming Product Route
 export const getAllStoreIncomingProductAPI = (page: number | any) =>

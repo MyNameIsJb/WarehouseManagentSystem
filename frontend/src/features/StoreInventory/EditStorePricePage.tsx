@@ -17,12 +17,12 @@ import { styled } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import {
-  getAllOutgoingProductsAction,
-  getOutgoingProductAction,
   itemsInterface,
-  removeSingleOutgoingProductAction,
-  updateOutgoingProductAction,
-} from "./outgoingProductSlice";
+  getStoreProductAction,
+  updateStorePriceAction,
+  getAllStoreInventoryAction,
+  removeSingleProductAction,
+} from "./storeInventorySlice";
 
 const StyledParentBox = styled(Box)(({ theme }) => ({
   width: "50%",
@@ -42,18 +42,16 @@ const StyledParentBox = styled(Box)(({ theme }) => ({
 
 const schema = yup
   .object({
-    productId: yup.string().required("Product id is required"),
-    quantity: yup.number().required("Quantity is required"),
-    store: yup.string().required("Store is required"),
+    storePrice: yup.string().required("Price is required"),
   })
   .required();
 
-const EditOutgoingProductPage = () => {
+const EditStorePricePage = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { singleOutgoingProduct, loading } = useAppSelector(
-    (state) => state.outgoingProduct
+  const { singleProduct, loading } = useAppSelector(
+    (state) => state.storeInventory
   );
   const {
     register,
@@ -63,23 +61,29 @@ const EditOutgoingProductPage = () => {
   } = useForm<itemsInterface>({
     resolver: yupResolver(schema),
     defaultValues: {
-      productId: singleOutgoingProduct?.productId,
-      quantity: singleOutgoingProduct?.quantity,
-      store: singleOutgoingProduct?.store,
+      productId: singleProduct?.productId,
+      brandName: singleProduct?.brandName,
+      description: singleProduct?.description,
+      model: singleProduct?.model,
+      quantity: singleProduct?.quantity,
+      wareHousePrice: singleProduct?.wareHousePrice,
     },
   });
 
   useEffect(() => {
-    dispatch(getOutgoingProductAction(id));
+    dispatch(getStoreProductAction(id));
   }, [dispatch, id]);
 
   useEffect(() => {
     reset({
-      productId: singleOutgoingProduct?.productId,
-      quantity: singleOutgoingProduct?.quantity,
-      store: singleOutgoingProduct?.store,
+      productId: singleProduct?.productId,
+      brandName: singleProduct?.brandName,
+      description: singleProduct?.description,
+      model: singleProduct?.model,
+      quantity: singleProduct?.quantity,
+      wareHousePrice: singleProduct?.wareHousePrice,
     });
-  }, [reset, singleOutgoingProduct]);
+  }, [reset, singleProduct]);
 
   const onSubmit = (data: itemsInterface) => {
     const finalData = {
@@ -87,11 +91,11 @@ const EditOutgoingProductPage = () => {
       id: id,
     };
 
-    dispatch(updateOutgoingProductAction(finalData))
+    dispatch(updateStorePriceAction(finalData))
       .unwrap()
       .then(() => {
-        dispatch(getAllOutgoingProductsAction(1));
-        navigate("/outgoingProduct");
+        dispatch(getAllStoreInventoryAction(1));
+        navigate("/storeInventory");
       });
     reset();
   };
@@ -110,13 +114,13 @@ const EditOutgoingProductPage = () => {
           component="h1"
           sx={{ fontWeight: "bold", color: "inherit" }}
         >
-          Edit Product
+          Edit Price
         </Typography>
         <Button
           color="error"
           onClick={() => {
-            navigate("/outgoingProduct");
-            dispatch(removeSingleOutgoingProductAction());
+            navigate("/storeInventory");
+            dispatch(removeSingleProductAction());
           }}
           variant="contained"
         >
@@ -140,16 +144,52 @@ const EditOutgoingProductPage = () => {
             </InputLabel>
             <Input
               {...register("productId")}
-              error={errors.productId ? true : false}
               id="standard-adornment-password"
               type="text"
+              disabled
             />
-            <FormHelperText
-              id="outlined-weight-helper-text"
-              sx={{ color: "#d50000" }}
-            >
-              {errors.productId?.message}
-            </FormHelperText>
+          </FormControl>
+          <FormControl
+            sx={{ width: "100%", margin: "1em 0 1em 0" }}
+            variant="standard"
+          >
+            <InputLabel htmlFor="standard-adornment-password" shrink>
+              Brand Name
+            </InputLabel>
+            <Input
+              {...register("brandName")}
+              id="standard-adornment-password"
+              type="text"
+              disabled
+            />
+          </FormControl>
+          <FormControl
+            sx={{ width: "100%", margin: "1em 0 1em 0" }}
+            variant="standard"
+          >
+            <InputLabel htmlFor="standard-adornment-password" shrink>
+              Description
+            </InputLabel>
+            <Input
+              {...register("description")}
+              id="standard-adornment-password"
+              type="text"
+              disabled
+            />
+          </FormControl>
+          <FormControl
+            sx={{ width: "100%", margin: "1em 0 1em 0" }}
+            variant="standard"
+          >
+            <InputLabel htmlFor="standard-adornment-password" shrink>
+              Model
+            </InputLabel>
+            <Input
+              {...register("model")}
+              id="standard-adornment-password"
+              type="text"
+              disabled
+            />
           </FormControl>
           <FormControl
             sx={{ width: "100%", margin: "1em 0 1em 0" }}
@@ -160,27 +200,35 @@ const EditOutgoingProductPage = () => {
             </InputLabel>
             <Input
               {...register("quantity")}
-              error={errors.quantity ? true : false}
               id="standard-adornment-password"
-              type="number"
+              type="text"
+              disabled
             />
-            <FormHelperText
-              id="outlined-weight-helper-text"
-              sx={{ color: "#d50000" }}
-            >
-              {errors.quantity?.message}
-            </FormHelperText>
           </FormControl>
           <FormControl
             sx={{ width: "100%", margin: "1em 0 1em 0" }}
             variant="standard"
           >
             <InputLabel htmlFor="standard-adornment-password" shrink>
-              Store
+              Warehouse Price
             </InputLabel>
             <Input
-              {...register("store")}
-              error={errors.store ? true : false}
+              {...register("wareHousePrice")}
+              id="standard-adornment-password"
+              type="text"
+              disabled
+            />
+          </FormControl>
+          <FormControl
+            sx={{ width: "100%", margin: "1em 0 1em 0" }}
+            variant="standard"
+          >
+            <InputLabel htmlFor="standard-adornment-password" shrink>
+              Store Price
+            </InputLabel>
+            <Input
+              {...register("storePrice")}
+              error={errors.storePrice ? true : false}
               id="standard-adornment-password"
               type="text"
             />
@@ -188,7 +236,7 @@ const EditOutgoingProductPage = () => {
               id="outlined-weight-helper-text"
               sx={{ color: "#d50000" }}
             >
-              {errors.store?.message}
+              {errors.storePrice?.message}
             </FormHelperText>
           </FormControl>
           <Box sx={{ marginTop: "2em" }}>
@@ -206,4 +254,4 @@ const EditOutgoingProductPage = () => {
   );
 };
 
-export default EditOutgoingProductPage;
+export default EditStorePricePage;

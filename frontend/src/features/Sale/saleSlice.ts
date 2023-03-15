@@ -5,6 +5,7 @@ import * as api from "../../api";
 export interface itemsInterface {
   _id: string;
   dateOfTransaction: Date;
+  productId: string;
   brandName: string;
   description: string;
   model: string;
@@ -56,6 +57,30 @@ export const getAllSalesAction = createAsyncThunk<saleInterface, number>(
   }
 );
 
+export const createSaleAction = createAsyncThunk<object, itemsInterface>(
+  "sale/createSaleAction",
+  async (data, thunkAPI) => {
+    try {
+      const response = await api.createSaleAPI(data);
+      Swal.fire({
+        title: "Success!",
+        text: response.data.message,
+        icon: "success",
+        timer: 2000,
+      });
+      return response.data;
+    } catch (error: any) {
+      Swal.fire({
+        title: "Error!",
+        text: error.response.data.message,
+        icon: "error",
+        timer: 2000,
+      });
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const saleSlice = createSlice({
   name: "sale",
   initialState,
@@ -69,6 +94,16 @@ export const saleSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(getAllSalesAction.rejected, (state, action) => {
+      state.errors = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(createSaleAction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(createSaleAction.fulfilled, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(createSaleAction.rejected, (state, action) => {
       state.errors = action.payload;
       state.loading = false;
     });

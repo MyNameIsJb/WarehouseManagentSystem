@@ -2,6 +2,7 @@ import { model, Schema } from "mongoose";
 
 export interface SaleInterface {
   dateOfTransaction: Date;
+  productId: string;
   brandName: string;
   description: string;
   model: string;
@@ -13,6 +14,7 @@ export interface SaleInterface {
 
 const SaleSchema = new Schema<SaleInterface>({
   dateOfTransaction: { type: Date, required: true },
+  productId: { type: String, required: true },
   brandName: { type: String, required: true },
   description: { type: String, required: true },
   model: { type: String, required: true },

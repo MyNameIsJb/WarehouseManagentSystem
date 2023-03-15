@@ -1,15 +1,25 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { Box, Typography, CircularProgress, Pagination } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  CircularProgress,
+  Pagination,
+} from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { getAllSalesAction, itemsInterface } from "./saleSlice";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 const SalePage = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { sales, loading } = useAppSelector((state) => state.sale);
   const [page, setPage] = useState(1);
+  const levelOfAccess = localStorage.getItem("levelOfAccess");
 
   useEffect(() => {
     dispatch(getAllSalesAction(1));
@@ -24,6 +34,8 @@ const SalePage = () => {
     <Box sx={{ margin: "1em", padding: "1em", background: "#FFF" }}>
       <Box
         sx={{
+          display: "flex",
+          justifyContent: "space-between",
           marginBottom: "1em",
           width: "100%",
         }}
@@ -35,6 +47,11 @@ const SalePage = () => {
         >
           Sale
         </Typography>
+        {levelOfAccess === "Client" && (
+          <Button onClick={() => navigate("/createSale")} variant="contained">
+            <AddIcon /> Add Sale
+          </Button>
+        )}
       </Box>
       <Box
         style={{
@@ -52,6 +69,7 @@ const SalePage = () => {
             <Thead>
               <Tr>
                 <Th>Date of Transaction</Th>
+                <Th>Product ID</Th>
                 <Th>Brand Name</Th>
                 <Th>Description</Th>
                 <Th>Model</Th>
@@ -70,6 +88,7 @@ const SalePage = () => {
                   <Td>0 Result</Td>
                   <Td>0 Result</Td>
                   <Td>0 Result</Td>
+                  <Td>0 Result</Td>
                 </Tr>
               ) : (
                 sales?.items.map((item: itemsInterface, index: number) => {
@@ -80,6 +99,7 @@ const SalePage = () => {
                           .utc()
                           .format("MMMM D, Y")}
                       </Td>
+                      <Td>{item.productId}</Td>
                       <Td>{item.brandName}</Td>
                       <Td>{item.description}</Td>
                       <Td>{item.model}</Td>

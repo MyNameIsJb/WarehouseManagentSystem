@@ -235,16 +235,16 @@ const EditProductPage = () => {
             >
               {errors.pricePerUnit?.message}
             </FormHelperText>
-            <Box sx={{ marginTop: "2em" }}>
-              <Button
-                type="submit"
-                variant="contained"
-                sx={{ width: "100%", borderRadius: "20px" }}
-              >
-                Submit
-              </Button>
-            </Box>
           </FormControl>
+          <Box sx={{ marginTop: "2em" }}>
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{ width: "100%", borderRadius: "20px" }}
+            >
+              Submit
+            </Button>
+          </Box>
         </form>
       )}
     </StyledParentBox>

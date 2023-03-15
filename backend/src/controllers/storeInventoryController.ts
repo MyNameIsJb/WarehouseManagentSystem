@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import mongoose from "mongoose";
 import StoreInventory from "../models/StoreInventory";
 import User from "../models/User";
 
@@ -29,6 +30,47 @@ export const getAllStoreInventoryController = async (
       },
       items,
     });
+  } catch (error) {
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+export const getStoreProductById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id))
+      return res.status(404).json({ message: "Invalid ID" });
+
+    const singleProduct = await StoreInventory.findById({ _id: id });
+
+    return res.status(200).json(singleProduct);
+  } catch (error) {
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+export const updateStorePriceController = async (
+  req: Request,
+  res: Response
+) => {
+  const { id } = req.params;
+  const { storePrice } = req.body;
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id))
+      return res.status(404).json({ message: "Invalid ID" });
+
+    await StoreInventory.findByIdAndUpdate(
+      id,
+      {
+        storePrice: `₱${storePrice}`,
+      },
+      {
+        new: true,
+      }
+    );
+    res.status(200).json({ message: "Successfully updated price" });
   } catch (error) {
     return res.status(500).json({ message: "Something went wrong" });
   }

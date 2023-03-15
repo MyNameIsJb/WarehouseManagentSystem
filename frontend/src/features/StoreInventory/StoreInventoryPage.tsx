@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Box,
   Typography,
@@ -8,7 +8,6 @@ import {
   Pagination,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import { useAppDispatch, useAppSelector } from "../../store/store";
@@ -19,7 +18,6 @@ import {
 
 const StoreInventoryPage = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const { products, loading } = useAppSelector((state) => state.storeInventory);
   const [page, setPage] = useState(1);
 
@@ -91,14 +89,68 @@ const StoreInventoryPage = () => {
                 products?.items.map((item: itemsInterface, index: number) => {
                   return (
                     <Tr key={index}>
-                      <Td>{item.productId}</Td>
-                      <Td>{item.brandName}</Td>
-                      <Td>{item.description}</Td>
-                      <Td>{item.model}</Td>
-                      <Td>{item.quantity}</Td>
-                      <Td>{item.wareHousePrice}</Td>
-                      <Td>{item.storePrice}</Td>
-                      <Td>
+                      <Td
+                        style={{
+                          background: item.quantity <= 8 && "red",
+                          color: item.quantity <= 8 && "white",
+                        }}
+                      >
+                        {item.productId}
+                      </Td>
+                      <Td
+                        style={{
+                          background: item.quantity <= 8 && "red",
+                          color: item.quantity <= 8 && "white",
+                        }}
+                      >
+                        {item.brandName}
+                      </Td>
+                      <Td
+                        style={{
+                          background: item.quantity <= 8 && "red",
+                          color: item.quantity <= 8 && "white",
+                        }}
+                      >
+                        {item.description}
+                      </Td>
+                      <Td
+                        style={{
+                          background: item.quantity <= 8 && "red",
+                          color: item.quantity <= 8 && "white",
+                        }}
+                      >
+                        {item.model}
+                      </Td>
+                      <Td
+                        style={{
+                          background: item.quantity <= 8 && "red",
+                          color: item.quantity <= 8 && "white",
+                        }}
+                      >
+                        {item.quantity}
+                      </Td>
+                      <Td
+                        style={{
+                          background: item.quantity <= 8 && "red",
+                          color: item.quantity <= 8 && "white",
+                        }}
+                      >
+                        {item.wareHousePrice}
+                      </Td>
+                      <Td
+                        style={{
+                          background: item.quantity <= 8 && "red",
+                          color: item.quantity <= 8 && "white",
+                        }}
+                      >
+                        {item.storePrice}
+                      </Td>
+                      <Td
+                        style={{
+                          background: item.quantity <= 8 && "red",
+                          color: item.quantity <= 8 && "white",
+                        }}
+                      >
                         <Box
                           sx={{
                             display: "flex",
@@ -106,25 +158,13 @@ const StoreInventoryPage = () => {
                             alignItems: "center",
                           }}
                         >
-                          <Link to={`/editProduct/${item._id}`}>
+                          <Link to={`/editStorePrice/${item._id}`}>
                             <Box sx={{ marginRight: "0.5em" }}>
                               <Button color="success" variant="contained">
                                 <EditIcon />
                               </Button>
                             </Box>
                           </Link>
-                          <Box sx={{ marginLeft: "0.5em" }}>
-                            <Button
-                              onClick={() => {
-                                // dispatch(deleteProductAction(item._id));
-                                setPage(1);
-                              }}
-                              color="error"
-                              variant="contained"
-                            >
-                              <DeleteIcon />
-                            </Button>
-                          </Box>
                         </Box>
                       </Td>
                     </Tr>

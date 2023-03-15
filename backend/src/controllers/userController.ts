@@ -29,8 +29,9 @@ export const signInController = async (req: Request, res: Response) => {
 
     const token = jwt.sign(
       {
-        username: existingUser.username,
         id: existingUser.id,
+        username: existingUser.username,
+        store: existingUser.store,
       },
       SECRET_KEY,
       {
