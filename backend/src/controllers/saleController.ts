@@ -104,3 +104,88 @@ export const getSaleById = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "Something went wrong" });
   }
 };
+
+export const updateSaleController = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { productId, quantity, decoded } = req.body;
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id))
+      return res.status(404).json({ message: "Invalid ID" });
+
+    const query = { store: decoded.store, productId };
+    const existingProduct = await StoreInventory.findOne(query);
+    const existingSale = await Sale.findById(id);
+    if (!existingProduct)
+      return res.status(404).json({ message: "Product id doesn't exist" });
+
+    const totalPrice =
+      parseFloat(existingProduct.wareHousePrice.replace(/[₱,]+/g, "")) *
+      quantity;
+    const formattedPrice = totalPrice.toLocaleString("en-US", {
+      style: "currency",
+      currency: "PHP",
+    });
+
+    if (existingSale!.quantity > quantity) {
+      const returnedQuantity = existingSale!.quantity - quantity;
+
+      await Sale.findByIdAndUpdate(
+        id,
+        { quantity, totalPrice: formattedPrice },
+        { new: true }
+      );
+
+      await StoreInventory.findByIdAndUpdate(
+        existingProduct.id,
+        { quantity: existingProduct.quantity + returnedQuantity },
+        { new: true }
+      );
+      return res.status(200).json({ message: "Updated sale successfully" });
+    } else {
+      const totalTakenQuantity = existingSale!.quantity + quantity;
+
+      await Sale.findByIdAndUpdate(
+        id,
+        { quantity, totalPrice: formattedPrice },
+        { new: true }
+      );
+
+      await StoreInventory.findByIdAndUpdate(
+        existingProduct.id,
+        { quantity: existingProduct.quantity - totalTakenQuantity },
+        { new: true }
+      );
+
+      return res.status(200).json({ message: "Updated sale successfully" });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+export const deleteSaleController = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { decoded } = req.body;
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id))
+      return res.status(404).json({ message: "Invalid ID" });
+
+    const existingSale = await Sale.findById(id);
+    const query = { store: decoded.store, productId: existingSale!.productId };
+    const existingProduct = await StoreInventory.findOne(query);
+
+    await StoreInventory.findByIdAndUpdate(
+      existingProduct?.id,
+      {
+        quantity: existingProduct!.quantity + existingSale!.quantity,
+      },
+      { new: true }
+    );
+
+    await Sale.findByIdAndDelete(id);
+    return res.status(203).json({ message: "Deleted sale successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+};
