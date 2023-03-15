@@ -32,6 +32,8 @@ import EmployeeMenu from "./components/EmployeeMenu";
 import ClientMenu from "./components/ClientMenu";
 import StoreInventoryPage from "./features/StoreInventory/StoreInventoryPage";
 import StoreIncomingProductPage from "./features/StoreIncomingProduct/StoreIncomingProductPage";
+import EditStorePricePage from "./features/StoreInventory/EditStorePricePage";
+import CreateSalePage from "./features/Sale/CreateSalePage";
 
 function App() {
   return (
@@ -112,6 +114,12 @@ function App() {
               path="/storeIncomingProduct"
               element={<StoreIncomingProductPage />}
             />
+            <Route
+              path="/editStorePrice/:id"
+              element={<EditStorePricePage />}
+            />
+            <Route path="/storeSales" element={<SalePage />} />
+            <Route path="/createSale" element={<CreateSalePage />} />
           </Route>
           <Route path="/viewGallery" element={<GalleryPage />} />
         </Route>

@@ -16,10 +16,10 @@ import { styled } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
 import { useAppDispatch } from "../../store/store";
 import {
-  createOutgoingProductAction,
-  getAllOutgoingProductsAction,
+  createSaleAction,
+  getAllSalesAction,
   itemsInterface,
-} from "./outgoingProductSlice";
+} from "./saleSlice";
 
 const StyledParentBox = styled(Box)(({ theme }) => ({
   width: "50%",
@@ -41,11 +41,10 @@ const schema = yup
   .object({
     productId: yup.string().required("Product id is required"),
     quantity: yup.number().required("Quantity is required"),
-    store: yup.string().required("Store is required"),
   })
   .required();
 
-const CreateOutgoingProductPage = () => {
+const CreateSalePage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const {
@@ -58,17 +57,13 @@ const CreateOutgoingProductPage = () => {
   });
 
   const onSubmit = (data: itemsInterface) => {
-    dispatch(createOutgoingProductAction(data))
+    dispatch(createSaleAction(data))
       .unwrap()
       .then(() => {
-        dispatch(getAllOutgoingProductsAction(1));
-        navigate("/outgoingProduct");
+        dispatch(getAllSalesAction(1));
+        navigate("/storeSales");
       });
-    reset({
-      productId: "",
-      quantity: 0,
-      store: "",
-    });
+    reset();
   };
 
   return (
@@ -85,11 +80,11 @@ const CreateOutgoingProductPage = () => {
           component="h1"
           sx={{ fontWeight: "bold", color: "inherit" }}
         >
-          Add Product
+          Create Sale
         </Typography>
         <Button
           color="error"
-          onClick={() => navigate("/outgoingProduct")}
+          onClick={() => navigate("/storeSales")}
           variant="contained"
         >
           <CloseIcon />
@@ -101,14 +96,13 @@ const CreateOutgoingProductPage = () => {
           variant="standard"
         >
           <InputLabel htmlFor="standard-adornment-password">
-            Product Id
+            Product ID
           </InputLabel>
           <Input
             {...register("productId")}
             error={errors.productId ? true : false}
             id="standard-adornment-password"
             type="text"
-            autoFocus
           />
           <FormHelperText
             id="outlined-weight-helper-text"
@@ -137,24 +131,6 @@ const CreateOutgoingProductPage = () => {
             {errors.quantity?.message}
           </FormHelperText>
         </FormControl>
-        <FormControl
-          sx={{ width: "100%", margin: "1em 0 1em 0" }}
-          variant="standard"
-        >
-          <InputLabel htmlFor="standard-adornment-password">Store</InputLabel>
-          <Input
-            {...register("store")}
-            error={errors.store ? true : false}
-            id="standard-adornment-password"
-            type="text"
-          />
-          <FormHelperText
-            id="outlined-weight-helper-text"
-            sx={{ color: "#d50000" }}
-          >
-            {errors.store?.message}
-          </FormHelperText>
-        </FormControl>
         <Box sx={{ marginTop: "2em" }}>
           <Button
             type="submit"
@@ -169,4 +145,4 @@ const CreateOutgoingProductPage = () => {
   );
 };
 
-export default CreateOutgoingProductPage;
+export default CreateSalePage;

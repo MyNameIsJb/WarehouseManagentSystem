@@ -40,7 +40,7 @@ const StyledParentBox = styled(Box)(({ theme }) => ({
 
 const schema = yup
   .object({
-    productId: yup.string().required("Product Id is required"),
+    productId: yup.string().required("Product id is required"),
   })
   .required();
 
