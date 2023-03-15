@@ -189,6 +189,12 @@ export const getAllSalesAPI = (page: number | any) =>
   authSaleAPI.get("/getAllSales", { params: { page: page } });
 export const createSaleAPI = (data: object | any) =>
   authSaleAPI.post("/createSale", data);
+export const getSaleAPI = (id: string | undefined) =>
+  authSaleAPI.get(`/getSale/${id}`);
+export const updateSaleAPI = (data: object | any) =>
+  authSaleAPI.put(`/updateSale/${data.id}`, data);
+export const deleteSaleAPI = (id: string | undefined) =>
+  authSaleAPI.post(`/deleteSale/${id}`);
 
 // Purchase Router
 export const getAllPurchasesAPI = (page: number | any) =>

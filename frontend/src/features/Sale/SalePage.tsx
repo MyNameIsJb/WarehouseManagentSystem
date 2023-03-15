@@ -7,12 +7,18 @@ import {
   Pagination,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import { useAppDispatch, useAppSelector } from "../../store/store";
-import { getAllSalesAction, itemsInterface } from "./saleSlice";
+import {
+  deleteSaleAction,
+  getAllSalesAction,
+  itemsInterface,
+} from "./saleSlice";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SalePage = () => {
   const dispatch = useAppDispatch();
@@ -76,11 +82,13 @@ const SalePage = () => {
                 <Th>Quantity</Th>
                 <Th>Total Price</Th>
                 <Th>Name of Store</Th>
+                <Th>Action</Th>
               </Tr>
             </Thead>
             <Tbody>
               {sales?.items.length === 0 ? (
                 <Tr>
+                  <Td>0 Result</Td>
                   <Td>0 Result</Td>
                   <Td>0 Result</Td>
                   <Td>0 Result</Td>
@@ -106,6 +114,37 @@ const SalePage = () => {
                       <Td>{item.quantity}</Td>
                       <Td>{item.totalPrice}</Td>
                       <Td>{item.nameOfStore}</Td>
+                      <Td>
+                        {levelOfAccess === "Client" && (
+                          <Box
+                            sx={{
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Link to={`/editSale/${item._id}`}>
+                              <Box sx={{ marginRight: "0.5em" }}>
+                                <Button color="success" variant="contained">
+                                  <EditIcon />
+                                </Button>
+                              </Box>
+                            </Link>
+                            <Box sx={{ marginLeft: "0.5em" }}>
+                              <Button
+                                onClick={() => {
+                                  dispatch(deleteSaleAction(item._id));
+                                  setPage(1);
+                                }}
+                                color="error"
+                                variant="contained"
+                              >
+                                <DeleteIcon />
+                              </Button>
+                            </Box>
+                          </Box>
+                        )}
+                      </Td>
                     </Tr>
                   );
                 })
