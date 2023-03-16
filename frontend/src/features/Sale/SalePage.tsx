@@ -82,7 +82,7 @@ const SalePage = () => {
                 <Th>Quantity</Th>
                 <Th>Total Price</Th>
                 <Th>Name of Store</Th>
-                <Th>Action</Th>
+                {levelOfAccess === "Client" && <Th>Action</Th>}
               </Tr>
             </Thead>
             <Tbody>
@@ -96,7 +96,7 @@ const SalePage = () => {
                   <Td>0 Result</Td>
                   <Td>0 Result</Td>
                   <Td>0 Result</Td>
-                  <Td>0 Result</Td>
+                  {levelOfAccess === "Client" && <Td>0 Result</Td>}
                 </Tr>
               ) : (
                 sales?.items.map((item: itemsInterface, index: number) => {
@@ -114,8 +114,8 @@ const SalePage = () => {
                       <Td>{item.quantity}</Td>
                       <Td>{item.totalPrice}</Td>
                       <Td>{item.nameOfStore}</Td>
-                      <Td>
-                        {levelOfAccess === "Client" && (
+                      {levelOfAccess === "Client" && (
+                        <Td>
                           <Box
                             sx={{
                               display: "flex",
@@ -143,8 +143,8 @@ const SalePage = () => {
                               </Button>
                             </Box>
                           </Box>
-                        )}
-                      </Td>
+                        </Td>
+                      )}
                     </Tr>
                   );
                 })

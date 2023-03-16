@@ -137,6 +137,7 @@ const EditSalePage = () => {
               error={errors.productId ? true : false}
               id="standard-adornment-password"
               type="text"
+              disabled
             />
             <FormHelperText
               id="outlined-weight-helper-text"

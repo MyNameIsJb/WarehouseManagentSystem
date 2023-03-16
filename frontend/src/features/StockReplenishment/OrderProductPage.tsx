@@ -6,25 +6,25 @@ import * as yup from "yup";
 import {
   Box,
   Button,
-  CircularProgress,
   FormControl,
   FormHelperText,
   Input,
   InputLabel,
-  Pagination,
   Typography,
+  Pagination,
+  CircularProgress,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
-import { useAppDispatch, useAppSelector } from "../../store/store";
-import {
-  createOutgoingProductAction,
-  getAllOutgoingProductsAction,
-  itemsInterface,
-} from "./outgoingProductSlice";
-import { getAllProductsAction } from "../ProductList/productListSlice";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import {
+  getAllOrderedProductsAction,
+  itemsInterface,
+  orderProductAction,
+} from "./stockReplenishmentSlice";
+import { getAllProductsAction } from "../ProductList/productListSlice";
 
 const StyledParentBox = styled(Box)(({ theme }) => ({
   width: "50%",
@@ -46,7 +46,6 @@ const schema = yup
   .object({
     productId: yup.string().required("Product id is required"),
     quantity: yup.number().required("Quantity is required"),
-    store: yup.string().required("Store is required"),
   })
   .required();
 
@@ -59,7 +58,7 @@ interface ProductListInterface {
   pricePerUnit: string;
 }
 
-const CreateOutgoingProductPage = () => {
+const OrderProductPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { products, loading } = useAppSelector((state) => state.productList);
@@ -74,11 +73,11 @@ const CreateOutgoingProductPage = () => {
   });
 
   const onSubmit = (data: itemsInterface) => {
-    dispatch(createOutgoingProductAction(data))
+    dispatch(orderProductAction(data))
       .unwrap()
       .then(() => {
-        dispatch(getAllOutgoingProductsAction(1));
-        navigate("/outgoingProduct");
+        dispatch(getAllOrderedProductsAction(1));
+        navigate("/storeOrderProduct");
       });
     reset();
   };
@@ -107,11 +106,11 @@ const CreateOutgoingProductPage = () => {
             component="h1"
             sx={{ fontWeight: "bold", color: "inherit" }}
           >
-            Add Product
+            Order Product
           </Typography>
           <Button
             color="error"
-            onClick={() => navigate("/outgoingProduct")}
+            onClick={() => navigate("/storeOrderProduct")}
             variant="contained"
           >
             <CloseIcon />
@@ -157,24 +156,6 @@ const CreateOutgoingProductPage = () => {
               sx={{ color: "#d50000" }}
             >
               {errors.quantity?.message}
-            </FormHelperText>
-          </FormControl>
-          <FormControl
-            sx={{ width: "100%", margin: "1em 0 1em 0" }}
-            variant="standard"
-          >
-            <InputLabel htmlFor="standard-adornment-password">Store</InputLabel>
-            <Input
-              {...register("store")}
-              error={errors.store ? true : false}
-              id="standard-adornment-password"
-              type="text"
-            />
-            <FormHelperText
-              id="outlined-weight-helper-text"
-              sx={{ color: "#d50000" }}
-            >
-              {errors.store?.message}
             </FormHelperText>
           </FormControl>
           <Box sx={{ marginTop: "2em" }}>
@@ -307,4 +288,4 @@ const CreateOutgoingProductPage = () => {
   );
 };
 
-export default CreateOutgoingProductPage;
+export default OrderProductPage;

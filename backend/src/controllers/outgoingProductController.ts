@@ -46,7 +46,7 @@ export const createOutgoingProductController = async (
     if (!existingProduct)
       return res.status(404).json({ message: "Product id doesn't exist" });
     if (quantity > existingProduct.quantity)
-      return res.status(400).json({ message: "Invalid Quanty" });
+      return res.status(400).json({ message: "Invalid Quantity" });
 
     const existingStore = await User.findOne({ store });
     if (!existingStore || store === "N/A")
@@ -101,7 +101,7 @@ export const updateOutgoingProductController = async (
     if (!existingProduct)
       return res.status(404).json({ message: "Product id doesn't exist" });
     if (quantity > existingProduct.quantity)
-      return res.status(400).json({ message: "Invalid Quanty" });
+      return res.status(400).json({ message: "Invalid Quantity" });
 
     const existingStore = await User.findOne({ store });
     if (!existingStore || store === "N/A")

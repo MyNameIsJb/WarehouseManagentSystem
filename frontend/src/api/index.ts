@@ -233,8 +233,16 @@ export const deliverOutgoingProductAPI = (id: string | undefined) =>
   authOutgoingProductAPI.post(`/deliverOutgoingProduct/${id}`);
 
 // Order Product Router
-export const getAllOrderProductsAPI = (page: number | any) =>
-  authOrderProductAPI.get("/getAllOrderProducts", { params: { page: page } });
+export const getAllOrderedProductsAPI = (page: number | any) =>
+  authOrderProductAPI.get("/getAllOrderedProducts", { params: { page: page } });
+export const orderProductAPI = (data: object | any) =>
+  authOrderProductAPI.post("/orderProduct", data);
+export const getOrderedProductAPI = (id: string | undefined) =>
+  authOrderProductAPI.get(`/getOrderedProduct/${id}`);
+export const updateOrderedProductAPI = (data: object | any) =>
+  authOrderProductAPI.put(`/updateOrderedProduct/${data.id}`, data);
+export const deleteOrderedProductAPI = (id: string | undefined) =>
+  authOrderProductAPI.delete(`/deleteOrderedProduct/${id}`);
 
 // Daily Attendance Router
 export const getAllDailyAttendanceAPI = (page: number | any) =>
