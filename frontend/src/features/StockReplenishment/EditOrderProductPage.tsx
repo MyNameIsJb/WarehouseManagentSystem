@@ -17,12 +17,12 @@ import { styled } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import {
-  getAllOutgoingProductsAction,
-  getOutgoingProductAction,
+  getAllOrderedProductsAction,
+  getOrderedProductAction,
   itemsInterface,
-  removeSingleOutgoingProductAction,
-  updateOutgoingProductAction,
-} from "./outgoingProductSlice";
+  removeSingleProductAction,
+  updateOrderedProductAction,
+} from "./stockReplenishmentSlice";
 
 const StyledParentBox = styled(Box)(({ theme }) => ({
   width: "50%",
@@ -44,16 +44,15 @@ const schema = yup
   .object({
     productId: yup.string().required("Product id is required"),
     quantity: yup.number().required("Quantity is required"),
-    store: yup.string().required("Store is required"),
   })
   .required();
 
-const EditOutgoingProductPage = () => {
+const EditOrderProductPage = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { singleOutgoingProduct, loading } = useAppSelector(
-    (state) => state.outgoingProduct
+  const { singleProduct, loading } = useAppSelector(
+    (state) => state.orderProduct
   );
   const {
     register,
@@ -63,23 +62,21 @@ const EditOutgoingProductPage = () => {
   } = useForm<itemsInterface>({
     resolver: yupResolver(schema),
     defaultValues: {
-      productId: singleOutgoingProduct?.productId,
-      quantity: singleOutgoingProduct?.quantity,
-      store: singleOutgoingProduct?.store,
+      productId: singleProduct?.productId,
+      quantity: singleProduct?.quantity,
     },
   });
 
   useEffect(() => {
-    dispatch(getOutgoingProductAction(id));
+    dispatch(getOrderedProductAction(id));
   }, [dispatch, id]);
 
   useEffect(() => {
     reset({
-      productId: singleOutgoingProduct?.productId,
-      quantity: singleOutgoingProduct?.quantity,
-      store: singleOutgoingProduct?.store,
+      productId: singleProduct?.productId,
+      quantity: singleProduct?.quantity,
     });
-  }, [reset, singleOutgoingProduct]);
+  }, [reset, singleProduct]);
 
   const onSubmit = (data: itemsInterface) => {
     const finalData = {
@@ -87,11 +84,11 @@ const EditOutgoingProductPage = () => {
       id: id,
     };
 
-    dispatch(updateOutgoingProductAction(finalData))
+    dispatch(updateOrderedProductAction(finalData))
       .unwrap()
       .then(() => {
-        dispatch(getAllOutgoingProductsAction(1));
-        navigate("/outgoingProduct");
+        dispatch(getAllOrderedProductsAction(1));
+        navigate("/storeOrderProduct");
       });
     reset();
   };
@@ -110,13 +107,13 @@ const EditOutgoingProductPage = () => {
           component="h1"
           sx={{ fontWeight: "bold", color: "inherit" }}
         >
-          Edit Product
+          Edit Order Product
         </Typography>
         <Button
           color="error"
           onClick={() => {
-            navigate("/outgoingProduct");
-            dispatch(removeSingleOutgoingProductAction());
+            navigate("/storeOrderProduct");
+            dispatch(removeSingleProductAction());
           }}
           variant="contained"
         >
@@ -172,26 +169,6 @@ const EditOutgoingProductPage = () => {
               {errors.quantity?.message}
             </FormHelperText>
           </FormControl>
-          <FormControl
-            sx={{ width: "100%", margin: "1em 0 1em 0" }}
-            variant="standard"
-          >
-            <InputLabel htmlFor="standard-adornment-password" shrink>
-              Store
-            </InputLabel>
-            <Input
-              {...register("store")}
-              error={errors.store ? true : false}
-              id="standard-adornment-password"
-              type="text"
-            />
-            <FormHelperText
-              id="outlined-weight-helper-text"
-              sx={{ color: "#d50000" }}
-            >
-              {errors.store?.message}
-            </FormHelperText>
-          </FormControl>
           <Box sx={{ marginTop: "2em" }}>
             <Button
               type="submit"
@@ -207,4 +184,4 @@ const EditOutgoingProductPage = () => {
   );
 };
 
-export default EditOutgoingProductPage;
+export default EditOrderProductPage;

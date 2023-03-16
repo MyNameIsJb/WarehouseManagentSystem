@@ -56,7 +56,7 @@ export const clientMenu = [
   { route: "storeInventory", link: "Inventory" },
   { route: "storeIncomingProduct", link: "Incoming Product" },
   { route: "storeSales", link: "Sales" },
-  { route: "storeOrderItem", link: "Order Item" },
+  { route: "storeOrderProduct", link: "Order Product" },
   { route: "storeReturnedItem", link: "Returned Item" },
 ];
 
@@ -171,7 +171,7 @@ const SideNav = () => {
                         <SellIcon />
                       ) : text.link === "Purchase" ? (
                         <ShoppingCartIcon />
-                      ) : text.link === "Order Item" ? (
+                      ) : text.link === "Order Product" ? (
                         <AddShoppingCartIcon />
                       ) : text.link === "Returned Item" ? (
                         <ProductionQuantityLimitsIcon />

@@ -25,24 +25,115 @@ export interface orderProductInterface {
 
 interface OrderProductState {
   products: orderProductInterface | null;
-  singleProducts: itemsInterface | null;
+  singleProduct: itemsInterface | null;
   loading: boolean;
   errors: any;
 }
 
 const initialState: OrderProductState = {
   products: null,
-  singleProducts: null,
+  singleProduct: null,
   loading: false,
   errors: null,
 };
 
-export const getAllOrderProductsAction = createAsyncThunk<
+export const getAllOrderedProductsAction = createAsyncThunk<
   orderProductInterface,
   number
 >("orderProduct/getAllOrderProductsAction", async (page, thunkAPI) => {
   try {
-    const response = await api.getAllOrderProductsAPI(page);
+    const response = await api.getAllOrderedProductsAPI(page);
+    return response.data;
+  } catch (error: any) {
+    Swal.fire({
+      title: "Error!",
+      text: error.response.data.message,
+      icon: "error",
+      timer: 2000,
+    });
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+export const orderProductAction = createAsyncThunk<object, itemsInterface>(
+  "orderProduct/orderProductAction",
+  async (data, thunkAPI) => {
+    try {
+      const response = await api.orderProductAPI(data);
+      Swal.fire({
+        title: "Success!",
+        text: response.data.message,
+        icon: "success",
+        timer: 2000,
+      });
+      return response.data;
+    } catch (error: any) {
+      Swal.fire({
+        title: "Error!",
+        text: error.response.data.message,
+        icon: "error",
+        timer: 2000,
+      });
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const getOrderedProductAction = createAsyncThunk<
+  itemsInterface,
+  string | undefined
+>("orderProduct/getOrderedProductAction", async (id, thunkAPI) => {
+  try {
+    const response = await api.getOrderedProductAPI(id);
+    return response.data;
+  } catch (error: any) {
+    Swal.fire({
+      title: "Error!",
+      text: error.response.data.message,
+      icon: "error",
+      timer: 2000,
+    });
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+export const updateOrderedProductAction = createAsyncThunk<
+  object,
+  itemsInterface
+>("orderProduct/updateOrderedProductAction", async (data, thunkAPI) => {
+  try {
+    const response = await api.updateOrderedProductAPI(data);
+    Swal.fire({
+      title: "Success!",
+      text: response.data.message,
+      icon: "success",
+      timer: 2000,
+    });
+    return response.data;
+  } catch (error: any) {
+    Swal.fire({
+      title: "Error!",
+      text: error.response.data.message,
+      icon: "error",
+      timer: 2000,
+    });
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+export const deleteOrderedProductAction = createAsyncThunk<
+  object,
+  string | undefined
+>("orderProduct/deleteOrderedProductAction", async (id, thunkAPI) => {
+  try {
+    const response = await api.deleteOrderedProductAPI(id);
+    Swal.fire({
+      title: "Success!",
+      text: response.data.message,
+      icon: "success",
+      timer: 2000,
+    });
+    thunkAPI.dispatch(getAllOrderedProductsAction(1));
     return response.data;
   } catch (error: any) {
     Swal.fire({
@@ -58,16 +149,61 @@ export const getAllOrderProductsAction = createAsyncThunk<
 export const orderProductSlice = createSlice({
   name: "orderProduct",
   initialState,
-  reducers: {},
+  reducers: {
+    removeSingleProductAction: (state) => {
+      state.singleProduct = null;
+    },
+  },
   extraReducers: (builder) => {
-    builder.addCase(getAllOrderProductsAction.pending, (state) => {
+    builder.addCase(getAllOrderedProductsAction.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(getAllOrderProductsAction.fulfilled, (state, action) => {
+    builder.addCase(getAllOrderedProductsAction.fulfilled, (state, action) => {
       state.products = action.payload;
       state.loading = false;
     });
-    builder.addCase(getAllOrderProductsAction.rejected, (state, action) => {
+    builder.addCase(getAllOrderedProductsAction.rejected, (state, action) => {
+      state.errors = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(orderProductAction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(orderProductAction.fulfilled, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(orderProductAction.rejected, (state, action) => {
+      state.errors = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(getOrderedProductAction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getOrderedProductAction.fulfilled, (state, action) => {
+      state.singleProduct = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(getOrderedProductAction.rejected, (state, action) => {
+      state.errors = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(updateOrderedProductAction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updateOrderedProductAction.fulfilled, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(updateOrderedProductAction.rejected, (state, action) => {
+      state.errors = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(deleteOrderedProductAction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(deleteOrderedProductAction.fulfilled, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(deleteOrderedProductAction.rejected, (state, action) => {
       state.errors = action.payload;
       state.loading = false;
     });
@@ -78,3 +214,4 @@ export const orderProductSlice = createSlice({
 });
 
 export default orderProductSlice.reducer;
+export const { removeSingleProductAction } = orderProductSlice.actions;

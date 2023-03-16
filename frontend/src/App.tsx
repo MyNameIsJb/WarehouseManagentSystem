@@ -35,6 +35,8 @@ import StoreIncomingProductPage from "./features/StoreIncomingProduct/StoreIncom
 import EditStorePricePage from "./features/StoreInventory/EditStorePricePage";
 import CreateSalePage from "./features/Sale/CreateSalePage";
 import EditSalePage from "./features/Sale/EditSalePage";
+import OrderProductPage from "./features/StockReplenishment/OrderProductPage";
+import EditOrderProductPage from "./features/StockReplenishment/EditOrderProductPage";
 
 function App() {
   return (
@@ -122,6 +124,15 @@ function App() {
             <Route path="/storeSales" element={<SalePage />} />
             <Route path="/createSale" element={<CreateSalePage />} />
             <Route path="/editSale/:id" element={<EditSalePage />} />
+            <Route
+              path="/storeOrderProduct"
+              element={<StockReplenishmentPage />}
+            />
+            <Route path="/orderProduct" element={<OrderProductPage />} />
+            <Route
+              path="/editOrderProduct/:id"
+              element={<EditOrderProductPage />}
+            />
           </Route>
           <Route path="/viewGallery" element={<GalleryPage />} />
         </Route>

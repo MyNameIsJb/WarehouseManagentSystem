@@ -57,6 +57,8 @@ export const createSaleController = async (req: Request, res: Response) => {
     const existingProduct = await StoreInventory.findOne(query);
     if (!existingProduct)
       return res.status(404).json({ message: "Product id doesn't exist" });
+    if (quantity > existingProduct.quantity)
+      return res.status(400).json({ message: "Invalid Quantity" });
 
     const totalPrice =
       parseFloat(existingProduct.wareHousePrice.replace(/[₱,]+/g, "")) *
@@ -116,8 +118,11 @@ export const updateSaleController = async (req: Request, res: Response) => {
     const query = { store: decoded.store, productId };
     const existingProduct = await StoreInventory.findOne(query);
     const existingSale = await Sale.findById(id);
+
     if (!existingProduct)
       return res.status(404).json({ message: "Product id doesn't exist" });
+    if (quantity > existingProduct.quantity)
+      return res.status(400).json({ message: "Invalid Quantity" });
 
     const totalPrice =
       parseFloat(existingProduct.wareHousePrice.replace(/[₱,]+/g, "")) *
@@ -127,9 +132,10 @@ export const updateSaleController = async (req: Request, res: Response) => {
       currency: "PHP",
     });
 
-    if (existingSale!.quantity > quantity) {
-      const returnedQuantity = existingSale!.quantity - quantity;
-
+    if (existingSale!.quantity !== quantity) {
+      const existingQuantity =
+        existingProduct.quantity + existingSale!.quantity;
+      const currentQuantity = existingQuantity - quantity;
       await Sale.findByIdAndUpdate(
         id,
         { quantity, totalPrice: formattedPrice },
@@ -138,25 +144,16 @@ export const updateSaleController = async (req: Request, res: Response) => {
 
       await StoreInventory.findByIdAndUpdate(
         existingProduct.id,
-        { quantity: existingProduct.quantity + returnedQuantity },
+        { quantity: currentQuantity },
         { new: true }
       );
       return res.status(200).json({ message: "Updated sale successfully" });
     } else {
-      const totalTakenQuantity = existingSale!.quantity + quantity;
-
       await Sale.findByIdAndUpdate(
         id,
         { quantity, totalPrice: formattedPrice },
         { new: true }
       );
-
-      await StoreInventory.findByIdAndUpdate(
-        existingProduct.id,
-        { quantity: existingProduct.quantity - totalTakenQuantity },
-        { new: true }
-      );
-
       return res.status(200).json({ message: "Updated sale successfully" });
     }
   } catch (error) {
