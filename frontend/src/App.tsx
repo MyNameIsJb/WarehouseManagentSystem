@@ -37,6 +37,8 @@ import CreateSalePage from "./features/Sale/CreateSalePage";
 import EditSalePage from "./features/Sale/EditSalePage";
 import OrderProductPage from "./features/StockReplenishment/OrderProductPage";
 import EditOrderProductPage from "./features/StockReplenishment/EditOrderProductPage";
+import CreateReturnedItemPage from "./features/ReturnedItem/CreateReturnedItemPage";
+import EditReturnedItemPage from "./features/ReturnedItem/EditReturnedItemPage";
 
 function App() {
   return (
@@ -132,6 +134,15 @@ function App() {
             <Route
               path="/editOrderProduct/:id"
               element={<EditOrderProductPage />}
+            />
+            <Route path="/storeReturnedItem" element={<ReturnedItemPage />} />
+            <Route
+              path="/createReturnedItem"
+              element={<CreateReturnedItemPage />}
+            />
+            <Route
+              path="/editRurnedItem/:id"
+              element={<EditReturnedItemPage />}
             />
           </Route>
           <Route path="/viewGallery" element={<GalleryPage />} />

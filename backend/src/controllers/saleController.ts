@@ -136,6 +136,7 @@ export const updateSaleController = async (req: Request, res: Response) => {
       const existingQuantity =
         existingProduct.quantity + existingSale!.quantity;
       const currentQuantity = existingQuantity - quantity;
+
       await Sale.findByIdAndUpdate(
         id,
         { quantity, totalPrice: formattedPrice },

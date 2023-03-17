@@ -253,6 +253,14 @@ export const getAllDailyAttendanceAPI = (page: number | any) =>
 // Returned Item Router
 export const getAllReturnedItemsAPI = (page: number | any) =>
   authReturnedItemAPI.get("/getAllReturnedItems", { params: { page: page } });
+export const createReturnedItemAPI = (data: object | any) =>
+  authReturnedItemAPI.post("/createReturnedItem", data);
+export const getReturnedItemAPI = (id: string | undefined) =>
+  authReturnedItemAPI.get(`/getReturnedItem/${id}`);
+export const updateReturnedItemAPI = (data: object | any) =>
+  authReturnedItemAPI.put(`/updateReturnedItem/${data.id}`, data);
+export const deleteReturnedItemAPI = (id: string | undefined) =>
+  authReturnedItemAPI.post(`/deleteReturnedItem/${id}`);
 
 // Barcode Generator Router
 export const createBarcodeAPI = (data: object | any) =>
