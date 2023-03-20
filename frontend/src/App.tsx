@@ -40,6 +40,7 @@ import EditOrderProductPage from "./features/StockReplenishment/EditOrderProduct
 import CreateReturnedItemPage from "./features/ReturnedItem/CreateReturnedItemPage";
 import EditReturnedItemPage from "./features/ReturnedItem/EditReturnedItemPage";
 import ProfilePage from "./features/Profile/ProfilePage";
+import HelpPage from "./features/Help/HelpPage";
 
 function App() {
   return (
@@ -148,6 +149,7 @@ function App() {
           </Route>
           <Route path="/viewGallery" element={<GalleryPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/help" element={<HelpPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
