@@ -159,6 +159,8 @@ export const updateUserAPI = (data: object | any) =>
   authUserAPI.post(`/updateUser/${data.id}`, data);
 export const deleteUserAPI = (id: string | undefined) =>
   authUserAPI.delete(`/deleteUser/${id}`);
+export const updateProfileAPI = (data: object | any) =>
+  authUserAPI.put("/updateProfile", data);
 
 // Product List Router
 export const getAllProductsAPI = (page: number | any) =>

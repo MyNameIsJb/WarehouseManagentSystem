@@ -64,7 +64,7 @@ const SideNav = () => {
   const [state, setState] = useState({
     left: false,
   });
-  const { profileData } = useAppSelector((state) => state.login);
+  const { profileData } = useAppSelector((state) => state.profile);
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>

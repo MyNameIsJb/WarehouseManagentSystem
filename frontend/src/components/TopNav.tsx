@@ -13,8 +13,9 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import { getProfileAction, logoutAction } from "../features/Login/loginSlice";
+import { logoutAction } from "../features/Login/loginSlice";
 import SideNav from "./SideNav";
+import { getProfileAction } from "../features/Profile/profileSlice";
 
 const settings = [
   { route: "profile", link: "Profile" },
@@ -26,7 +27,7 @@ const TopNav = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-  const { profileData, loading } = useAppSelector((state) => state.login);
+  const { profileData, loading } = useAppSelector((state) => state.profile);
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
