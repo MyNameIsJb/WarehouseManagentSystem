@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "../store/store";
 import TopNav from "./TopNav";
 import Box from "@mui/material/Box";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
-import { setForcedLogoutAction } from "../features/Login/loginSlice";
+import { setForcedLogoutAction } from "../features/Profile/profileSlice";
 
 const ProtectedRoute = () => {
   const token = localStorage.getItem("token");

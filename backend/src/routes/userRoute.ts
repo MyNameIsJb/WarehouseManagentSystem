@@ -9,6 +9,7 @@ import {
   getUserById,
   resetPasswordController,
   signInController,
+  updateProfileController,
   updateUserController,
 } from "../controllers/userController";
 import middleware from "../middleware/middleware";
@@ -28,5 +29,6 @@ router.post("/createUser", middleware, createUserController);
 router.get("/getUser/:id", middleware, getUserById);
 router.post("/updateUser/:id", middleware, updateUserController);
 router.delete("/deleteUser/:id", middleware, deleteUserController);
+router.put("/updateProfile", middleware, updateProfileController);
 
 export default router;

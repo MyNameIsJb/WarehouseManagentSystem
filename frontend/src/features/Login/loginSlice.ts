@@ -9,26 +9,12 @@ export interface LoginInterface {
   levelOfAccess: string;
 }
 
-export interface profileInterface {
-  _id: string;
-  username: string;
-  name: string;
-  email: string;
-  address: string;
-  birthDate: string;
-  contactNumber: string;
-  levelOfAccess: string;
-  store: string;
-}
-
 interface LoginState {
-  profileData: profileInterface | null;
   loading: boolean;
   errors: any;
 }
 
 const initialState: LoginState = {
-  profileData: null,
   loading: false,
   errors: null,
 };
@@ -60,25 +46,6 @@ export const signInAction = createAsyncThunk<LoginInterface, LoginInterface>(
   }
 );
 
-export const getProfileAction = createAsyncThunk<profileInterface>(
-  "dashboard/getProfileAction",
-  async (_, thunkAPI) => {
-    try {
-      const response = await api.getProfileAPI();
-      return response.data;
-    } catch (error: any) {
-      thunkAPI.dispatch(setForcedLogoutAction());
-      Swal.fire({
-        title: "Error!",
-        text: error.response.data.message,
-        icon: "error",
-        timer: 2000,
-      });
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
-
 // Reducers
 export const loginSlice = createSlice({
   name: "login",
@@ -94,10 +61,6 @@ export const loginSlice = createSlice({
         timer: 2000,
       });
     },
-    setForcedLogoutAction: (state) => {
-      localStorage.removeItem("token");
-      localStorage.removeItem("levelOfAccess");
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(signInAction.pending, (state) => {
@@ -110,17 +73,6 @@ export const loginSlice = createSlice({
       state.errors = action.payload;
       state.loading = false;
     });
-    builder.addCase(getProfileAction.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(getProfileAction.fulfilled, (state, action) => {
-      state.profileData = action.payload;
-      state.loading = false;
-    });
-    builder.addCase(getProfileAction.rejected, (state, action) => {
-      state.errors = action.payload;
-      state.loading = false;
-    });
     builder.addCase("LOGOUT", (state) => {
       Object.assign(state, initialState);
     });
@@ -128,4 +80,4 @@ export const loginSlice = createSlice({
 });
 
 export default loginSlice.reducer;
-export const { logoutAction, setForcedLogoutAction } = loginSlice.actions;
+export const { logoutAction } = loginSlice.actions;

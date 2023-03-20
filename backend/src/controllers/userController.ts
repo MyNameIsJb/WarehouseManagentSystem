@@ -459,3 +459,51 @@ export const deleteUserController = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "Something went wrong" });
   }
 };
+
+export const updateProfileController = async (req: Request, res: Response) => {
+  const {
+    decoded,
+    username,
+    name,
+    email,
+    address,
+    birthDate,
+    contactNumber,
+    store,
+  } = req.body;
+
+  try {
+    const checkEmailQuery = {
+      _id: { $ne: decoded.id },
+      email: email,
+    };
+    const existingEmail = await User.findOne(checkEmailQuery);
+    if (existingEmail)
+      return res.status(400).json({ message: "Email already exist" });
+
+    const checkContactNumberQuery = {
+      _id: { $ne: decoded.id },
+      contactNumber: contactNumber,
+    };
+    const existingContactNumber = await User.findOne(checkContactNumberQuery);
+    if (existingContactNumber)
+      return res.status(400).json({ message: "Contact number already exist" });
+
+    await User.findByIdAndUpdate(
+      decoded.id,
+      {
+        username,
+        name,
+        email,
+        address,
+        birthDate,
+        contactNumber,
+        store,
+      },
+      { new: true }
+    );
+    return res.status(200).json({ message: "Profile updated successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+};
