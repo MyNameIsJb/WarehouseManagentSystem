@@ -2,48 +2,48 @@ import axios from "axios";
 
 // Base API that dont require token
 const userAPI = axios.create({
-  baseURL: "https://backend-nq7w.onrender.com/user",
+  baseURL: "https://backend-piog.onrender.com/user",
 });
 
 // Base API that require token
 const authUserAPI = axios.create({
-  baseURL: "https://backend-nq7w.onrender.com/user",
+  baseURL: "https://backend-piog.onrender.com/user",
 });
 const authProductAPI = axios.create({
-  baseURL: "https://backend-nq7w.onrender.com/product",
+  baseURL: "https://backend-piog.onrender.com/product",
 });
 const authGalleryAPI = axios.create({
-  baseURL: "https://backend-nq7w.onrender.com/gallery",
+  baseURL: "https://backend-piog.onrender.com/gallery",
 });
 const authSaleAPI = axios.create({
-  baseURL: "https://backend-nq7w.onrender.com/sale",
+  baseURL: "https://backend-piog.onrender.com/sale",
 });
 const authPurchaseAPI = axios.create({
-  baseURL: "https://backend-nq7w.onrender.com/purchase",
+  baseURL: "https://backend-piog.onrender.com/purchase",
 });
 const authIncomingProductAPI = axios.create({
-  baseURL: "https://backend-nq7w.onrender.com/incomingProduct",
+  baseURL: "https://backend-piog.onrender.com/incomingProduct",
 });
 const authOutgoingProductAPI = axios.create({
-  baseURL: "https://backend-nq7w.onrender.com/outgoingProduct",
+  baseURL: "https://backend-piog.onrender.com/outgoingProduct",
 });
 const authOrderProductAPI = axios.create({
-  baseURL: "https://backend-nq7w.onrender.com/orderProduct",
+  baseURL: "https://backend-piog.onrender.com/orderProduct",
 });
 const authDailyAttendanceAPI = axios.create({
-  baseURL: "https://backend-nq7w.onrender.com/dailyAttendance",
+  baseURL: "https://backend-piog.onrender.com/dailyAttendance",
 });
 const authReturnedItemAPI = axios.create({
-  baseURL: "https://backend-nq7w.onrender.com/returnedItem",
+  baseURL: "https://backend-piog.onrender.com/returnedItem",
 });
 const authBarcodeGeneratorAPI = axios.create({
-  baseURL: "https://backend-nq7w.onrender.com/barcodeGenerator",
+  baseURL: "https://backend-piog.onrender.com/barcodeGenerator",
 });
 const authStoreInventoryAPI = axios.create({
-  baseURL: "https://backend-nq7w.onrender.com/storeInventory",
+  baseURL: "https://backend-piog.onrender.com/storeInventory",
 });
 const authStoreIncomingProductAPI = axios.create({
-  baseURL: "https://backend-nq7w.onrender.com/storeIncomingProduct",
+  baseURL: "https://backend-piog.onrender.com/storeIncomingProduct",
 });
 
 authUserAPI.interceptors.request.use((req) => {
